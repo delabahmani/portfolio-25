@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Tahoma";
+  src: url("./assets/fonts/windows-xp-tahoma.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Trebuchet MS";
+  src: url("./assets/fonts/windows-xp-trebuchet-ms.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-xp-blue: #0054e3;
+  --color-xp-light-blue: #4a9eff;
+  --color-xp-gray: #ece9d8;
+  --color-xp-dark-gray: #c0c0c0;
+  --color-xp-border: #0054e3;
+  --color-xp-window: #ece9d8;
+  --color-xp-taskbar: #245edb;
+  --color-xp-green: #39a96b;
+
+  --font-family-sans: "Tahoma", sans-serif;
+
+  --font-family-trebuchet: "Trebuchet MS", sans-serif;
+  --font-family-tahoma: "Tahoma", sans-serif;
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Tahoma", sans-serif;
+}

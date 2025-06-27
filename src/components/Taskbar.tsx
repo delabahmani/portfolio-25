@@ -4,15 +4,11 @@ import type { WindowData } from "../types";
 interface TaskbarProps {
   windows: WindowData[];
   onWindowToggle: (windowId: string) => void;
-  onWindowFocus: (windowId: string) => void;
 }
 
-const Taskbar: React.FC<TaskbarProps> = ({
-  windows,
-  onWindowToggle,
-  onWindowFocus,
-}) => {
+const Taskbar: React.FC<TaskbarProps> = ({ windows, onWindowToggle }) => {
   const [showStartMenu, setShowStartMenu] = useState(false);
+  const isMobile = window.innerWidth <= 768;
 
   const formatTime = () => {
     const now = new Date();
@@ -54,11 +50,11 @@ const Taskbar: React.FC<TaskbarProps> = ({
         {windows.map((window) => (
           <button
             key={window.id}
-            className={`flex items-center px-2 py-1 text-white text-xs rounded-sm border max-w-40 min-w-32 truncate cursor-pointer ${
+            className={`flex items-center px-1 md:px-2 py-1 text-white text-[13px] md:text-sm rounded-sm border truncate cursor-pointer ${
               window.isMinimized
                 ? "border-gray-400 bg-gray-600"
                 : "border-blue-300 bg-blue-700"
-            }`}
+            } ${isMobile ? "max-w-14 min-w-10" : "max-w-40 min-w-32"} `}
             style={{
               height: "24px",
               background: window.isMinimized
@@ -90,8 +86,8 @@ const Taskbar: React.FC<TaskbarProps> = ({
           height: "26px",
         }}
       >
-        <div className="flex items-center text-white text-2xl">
-          <span className="ml-2">{formatTime()}</span>
+        <div className="flex items-center text-white md:text-xl">
+          <span className="md:ml-2">{formatTime()}</span>
         </div>
       </div>
     </div>

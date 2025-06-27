@@ -21,6 +21,10 @@ export interface WindowData {
   y: number;
   width: number;
   height: number;
+  originalX?: number;
+  originalY?: number;
+  originalWidth?: number;
+  originalHeight?: number;
   content?: IconData;
   zIndex: number;
 }

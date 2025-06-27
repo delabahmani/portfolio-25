@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { IconData } from "../types";
 
 interface IconProps {
@@ -13,19 +14,44 @@ const Icon: React.FC<IconProps> = ({
   onSelect,
   onDoubleClick,
 }) => {
+  const [touchCount, setTouchCount] = useState(0);
+  const isMobile = window.innerWidth <= 768;
+
+  // Handle double-tap on mobile
+  const handleTouch = () => {
+    if (isMobile) {
+      setTouchCount((prev) => prev + 1);
+
+      // Reset count after delay
+      setTimeout(() => setTouchCount(0), 500);
+
+      // If double-tap, trigger onDoubleClick
+      if (touchCount === 1) {
+        onDoubleClick();
+      }
+    }
+  };
+
   return (
     <div
       className={`absolute flex flex-col cursor-pointer items-center justify-center w-28 h-28 rounded-sm${
         isSelected ? "bg-blue-300/20 border border-blue-300/50" : ""
       } hover:bg-blue-200/30 transition-colors duration-150`}
-      style={{ left: data.x, top: data.y }}
+      style={{
+        left: data.x,
+        top: data.y,
+        width: "80 px",
+        padding: "4px",
+        borderRadius: "4px",
+      }}
       onClick={onSelect}
-      onDoubleClick={onDoubleClick}
+      onDoubleClick={!isMobile ? onDoubleClick : undefined}
+      onTouchEnd={isMobile ? handleTouch : undefined}
     >
       <img
         src={data.icon}
         alt={data.name}
-        className="w-20 h-20 pointer-events-none"
+        className="lg:w-20 lg:h-20 w-16 h-16 mb-1 md:mb-0  pointer-events-none"
         style={{ imageRendering: "pixelated" }}
         draggable={false}
       />

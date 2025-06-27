@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { IconData, WindowData } from "../types";
 import Icon from "./Icon";
 
@@ -9,6 +9,7 @@ interface WindowProps {
   onMaximize: () => void;
   onFocus: () => void;
   onOpenIcon: (icon: IconData) => void;
+  onMove: (id: string, x: number, y: number) => void;
 }
 
 const Window: React.FC<WindowProps> = ({
@@ -18,12 +19,38 @@ const Window: React.FC<WindowProps> = ({
   onMaximize,
   onFocus,
   onOpenIcon,
+  onMove,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [selectedFileIcon, setSelectedFileIcon] = useState<string | null>(null);
+  const [isOpening, setIsOpening] = useState(true);
+  const [isClosing, setIsClosing] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsOpening(false), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 150);
+  };
+
+  const handleMinimize = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsClosing(true);
+    setTimeout(() => {
+      onMinimize();
+    }, 150);
+  };
 
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (data.isMaximized) return;
+
     onFocus();
     setIsDragging(true);
     setDragOffset({
@@ -31,6 +58,47 @@ const Window: React.FC<WindowProps> = ({
       y: e.clientY - data.y,
     });
   };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isDragging && !data.isMaximized) {
+        const newX = Math.max(
+          0,
+          Math.min(window.innerWidth - data.width, e.clientX - dragOffset.x)
+        );
+        const newY = Math.max(
+          0,
+          Math.min(
+            window.innerHeight - data.height - 30,
+            e.clientY - dragOffset.y
+          )
+        );
+        onMove(data.id, newX, newY);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [
+    isDragging,
+    dragOffset,
+    data.id,
+    data.width,
+    data.height,
+    data.isMaximized,
+    onMove,
+  ]);
 
   const handleIconDoubleClick = (icon: IconData) => {
     if (icon.type === "app" && icon.url) {
@@ -48,7 +116,10 @@ const Window: React.FC<WindowProps> = ({
       // Check if it's an image file
       if (data.content.description?.includes("/assets/images/")) {
         return (
-          <div className="bg-white h-full overflow-auto p-4 flex items-center justify-center">
+          <div
+            className="bg-white h-full overflow-auto p-4 flex items-center justify-center"
+            style={{ touchAction: "pinch-zoom" }}
+          >
             <img
               src={data.content.description}
               alt={data.content.name}
@@ -71,6 +142,8 @@ const Window: React.FC<WindowProps> = ({
 
     // Render folder content (icon grid)
     if (data.content.type === "folder" && data.content.content) {
+      const isMobile = window.innerWidth <= 768;
+
       return (
         <div className="bg-white h-full p-4 relative overflow-hidden">
           {data.content.content.map((icon, i) => (
@@ -78,8 +151,12 @@ const Window: React.FC<WindowProps> = ({
               key={icon.id}
               data={{
                 ...icon,
-                x: 20 + (i % 4) * 120,
-                y: 20 + Math.floor(i / 4) * 80,
+                x: isMobile
+                  ? 30 + Math.floor(i / 3) * 150 // New column every 3 items
+                  : 30 + (i % 4) * 150, // 4 items per row
+                y: isMobile
+                  ? 30 + (i % 3) * 120 // 3 items per column
+                  : 30 + Math.floor(i / 4) * 100, // New row every 4 items
               }}
               isSelected={selectedFileIcon === icon.id}
               onSelect={() => setSelectedFileIcon(icon.id)}
@@ -93,16 +170,32 @@ const Window: React.FC<WindowProps> = ({
     return null;
   };
 
+  // Calculate window styles based on maximize state
+  const windowStyle = {
+    ...(data.isMaximized
+      ? {
+          left: 0,
+          top: 0,
+          width: "100vw",
+          height: "calc(100vh - 30px)",
+        }
+      : {
+          left: data.x,
+          top: data.y,
+          width: data.width,
+          height: data.height,
+        }),
+    zIndex: data.zIndex,
+    transform: isOpening || isClosing ? "scale(0.8)" : "scale(1)",
+    opacity: isOpening || isClosing ? 0 : 1,
+  };
+
   return (
     <div
-      className="absolute bg-gray-100 border-2 border-[#1852E7] shadow-md rounded-tr-md rounded-tl-md "
-      style={{
-        left: data.x,
-        top: data.y,
-        width: data.width,
-        height: data.height,
-        zIndex: data.zIndex,
-      }}
+      className={`absolute bg-gray-100 border-2 border-[#1852E7] shadow-md ${
+        data.isMaximized ? "" : "rounded-tr-md rounded-tl-md"
+      }`}
+      style={{ ...windowStyle, transition: "all 0.15s ease-out" }}
       onClick={onFocus}
     >
       {/* Title Bar */}
@@ -112,12 +205,13 @@ const Window: React.FC<WindowProps> = ({
           background:
             "linear-gradient(to bottom, #3087FB 0%, #1C6AF8 14%, #1753E3 18%, #164EE0 42%, #1852E8 56%, #1A5AF5 70%, #1C64FA 84%, #1A59F2 100%)",
           height: "28px",
-          fontFamily: "Tahoma, sans-serif",
+          fontFamily: "Trebuchet MS, sans-serif",
           fontSize: "11px",
           borderTop: "1px solid #A6CAF0",
           borderLeft: "1px solid #003C74",
           borderRight: "1px solid #003C74",
           boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.3)",
+          cursor: data.isMaximized ? "default" : "move",
         }}
         onMouseDown={handleMouseDown}
       >
@@ -149,10 +243,7 @@ const Window: React.FC<WindowProps> = ({
               boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
               fontSize: "11px",
             }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onMinimize();
-            }}
+            onClick={handleMinimize}
           >
             _
           </button>
@@ -175,7 +266,7 @@ const Window: React.FC<WindowProps> = ({
               onMaximize();
             }}
           >
-            □
+            {data.isMaximized ? "⧉" : "□"}
           </button>
 
           {/* Close Button */}
@@ -192,10 +283,7 @@ const Window: React.FC<WindowProps> = ({
               fontSize: "20px",
               color: "white",
             }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onClose();
-            }}
+            onClick={handleClose}
           >
             x
           </button>

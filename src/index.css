@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Tahoma";
-  src: url("./assets/fonts/windows-xp-tahoma.woff2") format("woff2");
+  src: url("/assets/fonts/windows-xp-tahoma.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: "Trebuchet MS";
-  src: url("./assets/fonts/windows-xp-trebuchet-ms.woff2") format("woff2");
+  src: url("/assets/fonts/windows-xp-trebuchet-ms.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -38,6 +38,9 @@
   --breakpoint-2xl: 1536px;
 }
 
+* {
+  touch-action: manipulation;
+}
 
 html,
 body,

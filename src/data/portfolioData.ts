@@ -96,7 +96,7 @@ export const desktopIcons: IconData[] = [
       {
         id: "pantheras-project",
         name: "pantheras",
-        icon: "/assets/images/folder-closed.webp",
+        icon: "/assets/images/pantheras.webp",
         type: "folder",
         x: 80,
         y: 0,

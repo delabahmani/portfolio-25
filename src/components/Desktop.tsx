@@ -16,6 +16,8 @@ const Desktop: React.FC = () => {
     }
   };
 
+  const isMobile = window.innerWidth <= 768;
+
   const openWindow = (icon: IconData) => {
     const existingWindow = windows.find((w) => w.content?.id === icon.id);
     if (existingWindow) {
@@ -39,7 +41,7 @@ const Desktop: React.FC = () => {
       id: `window-${icon.id}-${Date.now()}`,
       title: icon.name,
       isMinimized: false,
-      isMaximized: false,
+      isMaximized: isMobile,
       x: Math.max(50, 100 + windows.length * 30),
       y: Math.max(50, 100 + windows.length * 30),
       width: icon.type === "folder" ? 750 : 625,
@@ -62,6 +64,10 @@ const Desktop: React.FC = () => {
     );
   };
 
+  const moveWindow = (windowId: string, x: number, y: number) => {
+    setWindows(windows.map((w) => (w.id === windowId ? { ...w, x, y } : w)));
+  };
+
   const maximizeWindow = (windowId: string) => {
     setWindows(
       windows.map((w) =>
@@ -69,10 +75,20 @@ const Desktop: React.FC = () => {
           ? {
               ...w,
               isMaximized: !w.isMaximized,
-              x: w.isMaximized ? w.x : 0,
-              y: w.isMaximized ? w.y : 0,
-              width: w.isMaximized ? w.width : window.innerWidth,
-              height: w.isMaximized ? w.height : window.innerHeight - 30,
+
+              ...(w.isMaximized
+                ? {
+                    x: w.originalX || w.x,
+                    y: w.originalY || w.y,
+                    width: w.originalWidth || w.width,
+                    height: w.originalHeight || w.height,
+                  }
+                : {
+                    originalX: w.x,
+                    originalY: w.y,
+                    originalWidth: w.width,
+                    originalHeight: w.height,
+                  }),
             }
           : w
       )
@@ -142,15 +158,12 @@ const Desktop: React.FC = () => {
             onMaximize={() => maximizeWindow(window.id)}
             onFocus={() => focusWindow(window.id)}
             onOpenIcon={openWindow}
+            onMove={moveWindow}
           />
         ))}
 
       {/* Taskbar */}
-      <Taskbar
-        windows={windows}
-        onWindowToggle={toggleWindowFromTaskbar}
-        onWindowFocus={focusWindow}
-      />
+      <Taskbar windows={windows} onWindowToggle={toggleWindowFromTaskbar} />
     </div>
   );
 };

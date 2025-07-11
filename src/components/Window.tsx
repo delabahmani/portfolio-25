@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { IconData, WindowData } from "../types";
 import Icon from "./Icon";
+import { useDrag } from "@use-gesture/react";
 
 interface WindowProps {
   data: WindowData;
@@ -21,8 +22,6 @@ const Window: React.FC<WindowProps> = ({
   onOpenIcon,
   onMove,
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [selectedFileIcon, setSelectedFileIcon] = useState<string | null>(null);
   const [isOpening, setIsOpening] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
@@ -31,6 +30,30 @@ const Window: React.FC<WindowProps> = ({
     const timer = setTimeout(() => setIsOpening(false), 50);
     return () => clearTimeout(timer);
   }, []);
+
+  const bind = useDrag(
+    ({ movement: [mx, my], memo = [data.x, data.y] }) => {
+      if (data.isMaximized) return memo;
+
+      const newX = Math.max(
+        0,
+        Math.min(window.innerWidth - data.width, memo[0] + mx)
+      );
+      const newY = Math.max(
+        0,
+        Math.min(window.innerHeight - data.height - 30, memo[1] + my)
+      );
+
+      onMove(data.id, newX, newY);
+      return memo;
+    },
+    {
+      filterTaps: true, // Prevents dragging when clicking btns
+      axis: undefined, // Allow dragging in both directions
+      threshold: 1, // Minimum movement to trigger drag
+      rubberband: false,
+    }
+  );
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -47,58 +70,6 @@ const Window: React.FC<WindowProps> = ({
       onMinimize();
     }, 150);
   };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (data.isMaximized) return;
-
-    onFocus();
-    setIsDragging(true);
-    setDragOffset({
-      x: e.clientX - data.x,
-      y: e.clientY - data.y,
-    });
-  };
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (isDragging && !data.isMaximized) {
-        const newX = Math.max(
-          0,
-          Math.min(window.innerWidth - data.width, e.clientX - dragOffset.x)
-        );
-        const newY = Math.max(
-          0,
-          Math.min(
-            window.innerHeight - data.height - 30,
-            e.clientY - dragOffset.y
-          )
-        );
-        onMove(data.id, newX, newY);
-      }
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-    };
-
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
-    }
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [
-    isDragging,
-    dragOffset,
-    data.id,
-    data.width,
-    data.height,
-    data.isMaximized,
-    onMove,
-  ]);
 
   const handleIconDoubleClick = (icon: IconData) => {
     if (icon.type === "app" && icon.url) {
@@ -200,6 +171,7 @@ const Window: React.FC<WindowProps> = ({
     >
       {/* Title Bar */}
       <div
+        {...bind()}
         className="text-white px-1 flex justify-between items-center cursor-move select-none"
         style={{
           background:
@@ -212,8 +184,8 @@ const Window: React.FC<WindowProps> = ({
           borderRight: "1px solid #003C74",
           boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.3)",
           cursor: data.isMaximized ? "default" : "move",
+          touchAction: "none", // Disable touch actions for dragging
         }}
-        onMouseDown={handleMouseDown}
       >
         <div className="flex items-center gap-2">
           <img

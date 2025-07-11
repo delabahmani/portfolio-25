@@ -8,7 +8,7 @@ import Taskbar from "./Taskbar";
 const Desktop: React.FC = () => {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
-  const [nextZIndex, setNextZIndex] = useState(10);
+  const [nextZIndex, setNextZIndex] = useState(1000);
 
   const handleDesktopClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {

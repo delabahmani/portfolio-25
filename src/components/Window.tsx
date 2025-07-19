@@ -25,6 +25,16 @@ const Window: React.FC<WindowProps> = ({
   const [selectedFileIcon, setSelectedFileIcon] = useState<string | null>(null);
   const [isOpening, setIsOpening] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [position, setPosition] = useState({ x: data.x, y: data.y });
+
+  const isMobile = window.innerWidth <= 768;
+
+  useEffect(() => {
+    if (!isDragging) {
+      setPosition({ x: data.x, y: data.y });
+    }
+  }, [data.x, data.y, isDragging]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsOpening(false), 50);
@@ -32,7 +42,13 @@ const Window: React.FC<WindowProps> = ({
   }, []);
 
   const bind = useDrag(
-    ({ movement: [mx, my], memo = [data.x, data.y] }) => {
+    ({ active, movement: [mx, my], down, memo = [data.x, data.y] }) => {
+      setIsDragging(active);
+
+      if (active && !isDragging) {
+        onFocus();
+      }
+
       if (data.isMaximized) return memo;
 
       const newX = Math.max(
@@ -44,7 +60,11 @@ const Window: React.FC<WindowProps> = ({
         Math.min(window.innerHeight - data.height - 30, memo[1] + my)
       );
 
-      onMove(data.id, newX, newY);
+      setPosition({ x: newX, y: newY });
+
+      if (!down) {
+        onMove(data.id, newX, newY);
+      }
       return memo;
     },
     {
@@ -54,6 +74,10 @@ const Window: React.FC<WindowProps> = ({
       rubberband: false,
     }
   );
+
+  useEffect(() => {
+    console.log(isDragging ? "Dragging started" : "Dragging ended");
+  }, [isDragging]);
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -116,7 +140,7 @@ const Window: React.FC<WindowProps> = ({
       const isMobile = window.innerWidth <= 768;
 
       return (
-        <div className="bg-white h-full p-4 relative overflow-hidden">
+        <div className="bg-white h-full relative overflow-auto">
           {data.content.content.map((icon, i) => (
             <Icon
               key={icon.id}
@@ -151,22 +175,23 @@ const Window: React.FC<WindowProps> = ({
           height: "calc(100vh - 30px)",
         }
       : {
-          left: data.x,
-          top: data.y,
+          left: position.x,
+          top: position.y,
           width: data.width,
           height: data.height,
         }),
     zIndex: data.zIndex,
     transform: isOpening || isClosing ? "scale(0.8)" : "scale(1)",
     opacity: isOpening || isClosing ? 0 : 1,
+    transition: isDragging ? "none" : "all 0.15s ease-out",
   };
 
   return (
     <div
-      className={`absolute bg-gray-100 border-2 border-[#1852E7] shadow-md ${
+      className={`absolute bg-gray-100 border-2 border-[#1852E7] shadow-md flex flex-col ${
         data.isMaximized ? "" : "rounded-tr-md rounded-tl-md"
       }`}
-      style={{ ...windowStyle, transition: "all 0.15s ease-out" }}
+      style={windowStyle}
       onClick={onFocus}
     >
       {/* Title Bar */}
@@ -183,7 +208,11 @@ const Window: React.FC<WindowProps> = ({
           borderLeft: "1px solid #003C74",
           borderRight: "1px solid #003C74",
           boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.3)",
-          cursor: data.isMaximized ? "default" : "move",
+          cursor: data.isMaximized
+            ? "default"
+            : isDragging
+            ? "grabbing"
+            : "grab",
           touchAction: "none", // Disable touch actions for dragging
         }}
       >
@@ -221,25 +250,27 @@ const Window: React.FC<WindowProps> = ({
           </button>
 
           {/* Maximize Button */}
-          <button
-            className="flex justify-center items-center font-bold cursor-pointer"
-            style={{
-              width: "20px",
-              height: "20px",
-              marginLeft: "2px",
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              border: "1px solid rgba(255, 255, 255, 0.3)",
-              borderRadius: "2px",
-              boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
-              fontSize: "9px",
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              onMaximize();
-            }}
-          >
-            {data.isMaximized ? "⧉" : "□"}
-          </button>
+          {!isMobile && (
+            <button
+              className="flex justify-center items-center font-bold cursor-pointer"
+              style={{
+                width: "20px",
+                height: "20px",
+                marginLeft: "2px",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                borderRadius: "2px",
+                boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
+                fontSize: "9px",
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onMaximize();
+              }}
+            >
+              {data.isMaximized ? "⧉" : "□"}
+            </button>
+          )}
 
           {/* Close Button */}
           <button
@@ -292,7 +323,6 @@ const Window: React.FC<WindowProps> = ({
 
       {/* Content Area */}
       <div
-        className="h-full"
         style={{
           height:
             data.content?.type === "folder"

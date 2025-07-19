@@ -37,13 +37,19 @@ const Desktop: React.FC = () => {
       return;
     }
 
+    const windowWidth = icon.type === "folder" ? 750 : 625;
+    const windowHeight = icon.type === "folder" ? 500 : 437;
+
+    const centerX = (window.innerWidth - windowWidth) / 2;  
+    const centerY = (window.innerHeight - windowHeight) / 2; 
+
     const newWindow: WindowData = {
       id: `window-${icon.id}-${Date.now()}`,
       title: icon.name,
       isMinimized: false,
       isMaximized: isMobile,
-      x: Math.max(50, 100 + windows.length * 30),
-      y: Math.max(50, 100 + windows.length * 30),
+      x: Math.max(0, centerX + windows.length * 30),
+      y: Math.max(0, centerY + windows.length * 30),
       width: icon.type === "folder" ? 750 : 625,
       height: icon.type === "folder" ? 500 : 437,
       content: icon,

@@ -53,3 +53,53 @@ body,
 body {
   font-family: "Tahoma", sans-serif;
 }
+
+/* Default cursor */
+html,
+body {
+  cursor: url("/cursors/arrow_m.cur"), auto;
+}
+
+a,
+button,
+.cursor-pointer {
+  cursor: url("/cursors/default_link.cur"), pointer;
+}
+
+input[type="text"],
+textarea {
+  cursor: url("/cursors/beam_r.cur"), text;
+}
+
+.cursor-wait {
+  cursor: url("/cursors/wait_m.cur"), wait;
+}
+
+.cursor-move {
+  cursor: url("/cursors/move_r.cur"), move !important;
+}
+
+.cursor-grabbing {
+  cursor: url("/cursors/move_r.cur"), grabbing !important;
+}
+
+[disabled] {
+  cursor: url("/cursors/no_r.cur"), not-allowed;
+}
+
+.cursor-help {
+  cursor: url("/cursors/help_m.cur"), help;
+}
+
+.cursor-ns-resize {
+  cursor: url("/cursors/sizens.ani"), ns-resize;
+}
+.cursor-we-resize {
+  cursor: url("/cursors/sizewe.ani"), ew-resize;
+}
+.cursor-nwse-resize {
+  cursor: url("/cursors/sizenwse.ani"), nwse-resize;
+}
+.cursor-nesw-resize {
+  cursor: url("/cursors/sizenesw.ani"), nesw-resize;
+}

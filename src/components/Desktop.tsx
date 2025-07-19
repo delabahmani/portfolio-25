@@ -40,8 +40,8 @@ const Desktop: React.FC = () => {
     const windowWidth = icon.type === "folder" ? 750 : 625;
     const windowHeight = icon.type === "folder" ? 500 : 437;
 
-    const centerX = (window.innerWidth - windowWidth) / 2;  
-    const centerY = (window.innerHeight - windowHeight) / 2; 
+    const centerX = (window.innerWidth - windowWidth) / 2;
+    const centerY = (window.innerHeight - windowHeight) / 2;
 
     const newWindow: WindowData = {
       id: `window-${icon.id}-${Date.now()}`,
@@ -67,6 +67,18 @@ const Desktop: React.FC = () => {
   const minimizeWindow = (windowId: string) => {
     setWindows(
       windows.map((w) => (w.id === windowId ? { ...w, isMinimized: true } : w))
+    );
+  };
+
+  const resizeWindow = (
+    windowId: string,
+    newSize: { width: number; height: number },
+    newPos?: { x: number; y: number }
+  ) => {
+    setWindows(
+      windows.map((w) =>
+        w.id === windowId ? { ...w, ...newSize, ...newPos } : w
+      )
     );
   };
 
@@ -165,6 +177,7 @@ const Desktop: React.FC = () => {
             onFocus={() => focusWindow(window.id)}
             onOpenIcon={openWindow}
             onMove={moveWindow}
+            onResize={resizeWindow}
           />
         ))}
 

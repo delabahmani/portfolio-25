@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import type { IconData, WindowData } from "../types";
 import Icon from "./Icon";
 import { useDrag } from "@use-gesture/react";
+import TitleBar from "./TitleBar";
+import ResizeHandles from "./ResizeHandles";
 
 interface WindowProps {
   data: WindowData;
@@ -11,6 +13,11 @@ interface WindowProps {
   onFocus: () => void;
   onOpenIcon: (icon: IconData) => void;
   onMove: (id: string, x: number, y: number) => void;
+  onResize: (
+    id: string,
+    newSize: { width: number; height: number },
+    newPos?: { x: number; y: number }
+  ) => void;
 }
 
 const Window: React.FC<WindowProps> = ({
@@ -21,6 +28,7 @@ const Window: React.FC<WindowProps> = ({
   onFocus,
   onOpenIcon,
   onMove,
+  onResize,
 }) => {
   const [selectedFileIcon, setSelectedFileIcon] = useState<string | null>(null);
   const [isOpening, setIsOpening] = useState(true);
@@ -74,10 +82,6 @@ const Window: React.FC<WindowProps> = ({
       rubberband: false,
     }
   );
-
-  useEffect(() => {
-    console.log(isDragging ? "Dragging started" : "Dragging ended");
-  }, [isDragging]);
 
   const handleClose = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -194,104 +198,20 @@ const Window: React.FC<WindowProps> = ({
       style={windowStyle}
       onClick={onFocus}
     >
+      <ResizeHandles data={data} onResize={onResize} />
+
       {/* Title Bar */}
-      <div
-        {...bind()}
-        className="text-white px-1 flex justify-between items-center cursor-move select-none"
-        style={{
-          background:
-            "linear-gradient(to bottom, #3087FB 0%, #1C6AF8 14%, #1753E3 18%, #164EE0 42%, #1852E8 56%, #1A5AF5 70%, #1C64FA 84%, #1A59F2 100%)",
-          height: "28px",
-          fontFamily: "Trebuchet MS, sans-serif",
-          fontSize: "11px",
-          borderTop: "1px solid #A6CAF0",
-          borderLeft: "1px solid #003C74",
-          borderRight: "1px solid #003C74",
-          boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.3)",
-          cursor: data.isMaximized
-            ? "default"
-            : isDragging
-            ? "grabbing"
-            : "grab",
-          touchAction: "none", // Disable touch actions for dragging
-        }}
-      >
-        <div className="flex items-center gap-2">
-          <img
-            src={data.content?.icon}
-            className="w-4 h-4"
-            style={{ imageRendering: "pixelated" }}
-          />
-          <span
-            className="font-bold"
-            style={{ textShadow: "1px 1px 0 rgba(0, 0, 0, 0.5)" }}
-          >
-            {data.title}
-          </span>
-        </div>
-
-        <div className="flex">
-          {/* Minimize Button */}
-          <button
-            className="flex justify-center items-center font-bold cursor-pointer"
-            style={{
-              width: "20px",
-              height: "20px",
-              marginLeft: "2px",
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              border: "1px solid rgba(255, 255, 255, 0.3)",
-              borderRadius: "2px",
-              boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
-              fontSize: "11px",
-            }}
-            onClick={handleMinimize}
-          >
-            _
-          </button>
-
-          {/* Maximize Button */}
-          {!isMobile && (
-            <button
-              className="flex justify-center items-center font-bold cursor-pointer"
-              style={{
-                width: "20px",
-                height: "20px",
-                marginLeft: "2px",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
-                borderRadius: "2px",
-                boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
-                fontSize: "9px",
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                onMaximize();
-              }}
-            >
-              {data.isMaximized ? "⧉" : "□"}
-            </button>
-          )}
-
-          {/* Close Button */}
-          <button
-            className="flex justify-center items-center font-bold cursor-pointer"
-            style={{
-              width: "20px",
-              height: "20px",
-              marginLeft: "2px",
-              background: "linear-gradient(to bottom, #FF8F8F, #CC0000)",
-              border: "1px solid #CC0000",
-              borderRadius: "2px",
-              boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
-              fontSize: "20px",
-              color: "white",
-            }}
-            onClick={handleClose}
-          >
-            x
-          </button>
-        </div>
-      </div>
+      <TitleBar
+        title={data.title}
+        icon={data.content?.icon}
+        isMaximized={data.isMaximized}
+        onClose={handleClose}
+        onMinimize={handleMinimize}
+        onMaximize={onMaximize}
+        isDragging={isDragging}
+        isMobile={isMobile}
+        bind={bind}
+      />
 
       {/* Menu Bar */}
       <div className="bg-gray-100 border-b border-gray-300 px-2 py-1 text-xs">

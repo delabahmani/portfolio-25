@@ -4,16 +4,25 @@ import { desktopIcons } from "../data/portfolioData";
 import Icon from "./Icon";
 import Window from "./Window";
 import Taskbar from "./Taskbar";
+import StartMenu from "./StartMenu";
 
 const Desktop: React.FC = () => {
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
   const [nextZIndex, setNextZIndex] = useState(1000);
+  const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
 
   const handleDesktopClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
       setSelectedIcon(null);
+      if (isStartMenuOpen) {
+        setIsStartMenuOpen(false);
+      }
     }
+  };
+
+  const toggleStartMenu = () => {
+    setIsStartMenuOpen((prev) => !prev);
   };
 
   const isMobile = window.innerWidth <= 768;
@@ -181,8 +190,19 @@ const Desktop: React.FC = () => {
           />
         ))}
 
+      {/* Start Menu */}
+      <StartMenu
+        isOpen={isStartMenuOpen}
+        onClose={() => setIsStartMenuOpen(false)}
+        onOpenIcon={openWindow}
+      />
+
       {/* Taskbar */}
-      <Taskbar windows={windows} onWindowToggle={toggleWindowFromTaskbar} />
+      <Taskbar
+        windows={windows}
+        onWindowToggle={toggleWindowFromTaskbar}
+        onStartClick={toggleStartMenu}
+      />
     </div>
   );
 };

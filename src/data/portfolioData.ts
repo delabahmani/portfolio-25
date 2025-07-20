@@ -4,7 +4,7 @@ export const desktopIcons: IconData[] = [
   {
     id: "about-me",
     name: "about me",
-    icon: "/assets/images/folder-closed.webp",
+    icon: "/assets/icons/folder-closed.webp",
     type: "folder",
     x: 50,
     y: 50,
@@ -12,7 +12,7 @@ export const desktopIcons: IconData[] = [
       {
         id: "about-txt",
         name: "about.txt",
-        icon: "/assets/images/notepad.webp",
+        icon: "/assets/icons/notepad.webp",
         type: "file",
         x: 0,
         y: 0,
@@ -42,7 +42,7 @@ export const desktopIcons: IconData[] = [
   {
     id: "projects",
     name: "projects",
-    icon: "/assets/images/folder-closed.webp",
+    icon: "/assets/icons/folder-closed.webp",
     type: "folder",
     x: 50,
     y: 180,
@@ -50,7 +50,7 @@ export const desktopIcons: IconData[] = [
       {
         id: "nsanity",
         name: "nsanity",
-        icon: "/assets/images/nsanity.webp",
+        icon: "/assets/icons/nsanity.webp",
         type: "folder",
         x: 0,
         y: 0,
@@ -76,7 +76,7 @@ export const desktopIcons: IconData[] = [
           {
             id: "nsanity-link",
             name: "nsanity link",
-            icon: "/assets/images/explorer1.webp",
+            icon: "/assets/icons/explorer1.webp",
             type: "app",
             x: 160,
             y: 0,
@@ -85,7 +85,7 @@ export const desktopIcons: IconData[] = [
           {
             id: "nsanity-info",
             name: "info.txt",
-            icon: "/assets/images/notepad.webp",
+            icon: "/assets/icons/notepad.webp",
             type: "file",
             x: 240,
             y: 0,
@@ -96,7 +96,7 @@ export const desktopIcons: IconData[] = [
       {
         id: "pantheras-project",
         name: "pantheras",
-        icon: "/assets/images/pantheras.webp",
+        icon: "/assets/icons/pantheras.webp",
         type: "folder",
         x: 80,
         y: 0,
@@ -104,7 +104,7 @@ export const desktopIcons: IconData[] = [
           {
             id: "pantheras-img1",
             name: "img 1",
-            icon: "/assets/images/folder-open-note.webp",
+            icon: "/assets/icons/folder-open-note.webp",
             type: "file",
             x: 0,
             y: 0,
@@ -113,7 +113,7 @@ export const desktopIcons: IconData[] = [
           {
             id: "pantheras-img2",
             name: "img 2",
-            icon: "/assets/images/folder-open-note.webp",
+            icon: "/assets/icons/folder-open-note.webp",
             type: "file",
             x: 80,
             y: 0,
@@ -122,7 +122,7 @@ export const desktopIcons: IconData[] = [
           {
             id: "pantheras-link",
             name: "link to site",
-            icon: "/assets/images/explorer2.webp",
+            icon: "/assets/icons/explorer2.webp",
             type: "app",
             x: 160,
             y: 0,
@@ -131,7 +131,7 @@ export const desktopIcons: IconData[] = [
           {
             id: "pantheras-info",
             name: "info.txt",
-            icon: "/assets/images/notepad.webp",
+            icon: "/assets/icons/notepad.webp",
             type: "file",
             x: 240,
             y: 0,
@@ -177,7 +177,7 @@ Modern e-commerce platform with sleek design and seamless shopping experience.
   {
     id: "contact",
     name: "contact",
-    icon: "/assets/images/folder-closed.webp",
+    icon: "/assets/icons/folder-closed.webp",
     type: "folder",
     x: 50,
     y: 310,
@@ -185,7 +185,7 @@ Modern e-commerce platform with sleek design and seamless shopping experience.
       {
         id: "contact-info",
         name: "contact.txt",
-        icon: "/assets/images/notepad.webp",
+        icon: "/assets/icons/notepad.webp",
         type: "file",
         x: 0,
         y: 0,

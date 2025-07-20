@@ -1,29 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { WindowData } from "../types";
 
 interface TaskbarProps {
   windows: WindowData[];
   onWindowToggle: (windowId: string) => void;
+  onStartClick: () => void;
 }
 
-const Taskbar: React.FC<TaskbarProps> = ({ windows, onWindowToggle }) => {
-  const [showStartMenu, setShowStartMenu] = useState(false);
+const Taskbar: React.FC<TaskbarProps> = ({
+  windows,
+  onWindowToggle,
+  onStartClick,
+}) => {
+  const [showStartMenu, _setShowStartMenu] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
   const isMobile = window.innerWidth <= 768;
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   const formatTime = () => {
-    const now = new Date();
-    return now.toLocaleTimeString("en-US", {
+    return currentTime.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
     });
   };
 
+  const handleStartClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onStartClick();
+  };
+
   return (
     <div
       className="fixed bottom-0 left-0 right-0 flex items-center justify-between px-1 select-none"
       style={{
-        height: "30px",
+        height: "35px",
         background:
           "linear-gradient(to bottom, #245EDC 0%, #1941A5 50%, #1941A5 100%)",
         borderTop: "1px solid #4A9EFF",
@@ -40,7 +60,7 @@ const Taskbar: React.FC<TaskbarProps> = ({ windows, onWindowToggle }) => {
           height: "24px",
           boxShadow: "inset 1px 1px 0 rgba(255,255,255,0.3)",
         }}
-        onClick={() => setShowStartMenu(!showStartMenu)}
+        onClick={handleStartClick}
       >
         start
       </button>
@@ -50,7 +70,7 @@ const Taskbar: React.FC<TaskbarProps> = ({ windows, onWindowToggle }) => {
         {windows.map((window) => (
           <button
             key={window.id}
-            className={`flex items-center px-1 md:px-2 py-1 text-white text-[13px] md:text-sm rounded-sm border truncate cursor-pointer ${
+            className={`flex items-center px-1 md:px-2 py-1  text-white text-[13px] md:text-sm rounded-sm border truncate cursor-pointer ${
               window.isMinimized
                 ? "border-gray-400 bg-gray-600"
                 : "border-blue-300 bg-blue-700"
@@ -70,10 +90,10 @@ const Taskbar: React.FC<TaskbarProps> = ({ windows, onWindowToggle }) => {
           >
             <img
               src={window.content?.icon}
-              className="w-4 h-4 mr-1 flex-shrink-0"
+              className="w-8 h-8 mr-1 flex-shrink-0"
               style={{ imageRendering: "pixelated" }}
             />
-            <span className="truncate">{window.title}</span>
+            <span className="truncate custom-text-shadow">{window.title}</span>
           </button>
         ))}
       </div>

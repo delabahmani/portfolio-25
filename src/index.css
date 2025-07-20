@@ -103,3 +103,7 @@ textarea {
 .cursor-nesw-resize {
   cursor: url("/cursors/sizenesw.ani"), nesw-resize;
 }
+
+.custom-text-shadow {
+  @apply drop-shadow-[0_1.4px_1.4px_rgba(0,0,0,0.8)]
+}

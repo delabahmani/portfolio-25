@@ -160,6 +160,7 @@ const Window: React.FC<WindowProps> = ({
               isSelected={selectedFileIcon === icon.id}
               onSelect={() => setSelectedFileIcon(icon.id)}
               onDoubleClick={() => handleIconDoubleClick(icon)}
+              variant="window"
             />
           ))}
         </div>
@@ -192,13 +193,13 @@ const Window: React.FC<WindowProps> = ({
 
   return (
     <div
-      className={`absolute bg-gray-100 border-2 border-[#1852E7] shadow-md flex flex-col ${
+      className={`absolute bg-gray-100 border-[3px] border-[#1852E7] shadow-md flex flex-col ${
         data.isMaximized ? "" : "rounded-tr-md rounded-tl-md"
       }`}
       style={windowStyle}
       onClick={onFocus}
     >
-      <ResizeHandles data={data} onResize={onResize} />
+      {!isMobile && <ResizeHandles data={data} onResize={onResize} />}
 
       {/* Title Bar */}
       <TitleBar

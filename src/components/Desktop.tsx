@@ -46,8 +46,17 @@ const Desktop: React.FC = () => {
       return;
     }
 
-    const windowWidth = icon.type === "folder" ? 750 : 625;
-    const windowHeight = icon.type === "folder" ? 500 : 437;
+    // Determine window dimensions based on type
+    let windowWidth = 625;
+    let windowHeight = 437;
+
+    if (icon.type === "folder") {
+      windowWidth = 750;
+      windowHeight = 500;
+    } else if (icon.type === "email") {
+      windowWidth = 600;
+      windowHeight = 450;
+    }
 
     const centerX = (window.innerWidth - windowWidth) / 2;
     const centerY = (window.innerHeight - windowHeight) / 2;
@@ -63,6 +72,7 @@ const Desktop: React.FC = () => {
       height: icon.type === "folder" ? 500 : 437,
       content: icon,
       zIndex: nextZIndex,
+      type: icon.type,
     };
 
     setWindows([...windows, newWindow]);

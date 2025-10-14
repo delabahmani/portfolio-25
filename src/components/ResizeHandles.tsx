@@ -11,8 +11,11 @@ interface ResizeHandlesProps {
 }
 
 const ResizeHandles: React.FC<ResizeHandlesProps> = ({ data, onResize }) => {
-  const createResizeBind = (edge: ("top" | "bottom" | "left" | "right")[]) => {
-    return useDrag(({ down, movement: [mx, my], memo }) => {
+  const createResizeHandler = (
+    edge: ("top" | "bottom" | "left" | "right")[]
+  ) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return ({ down, movement: [mx, my], memo }: any) => {
       memo = memo || {
         x: data.x,
         y: data.y,
@@ -39,18 +42,18 @@ const ResizeHandles: React.FC<ResizeHandlesProps> = ({ data, onResize }) => {
       if (edge.includes("left") || edge.includes("top")) newPos = { x, y };
       if (down) onResize(data.id, { width, height }, newPos);
       return memo;
-    });
+    };
   };
 
-  const bindTop = createResizeBind(["top"]);
-  const bindBottom = createResizeBind(["bottom"]);
-  const bindLeft = createResizeBind(["left"]);
-  const bindRight = createResizeBind(["right"]);
+  const bindTop = useDrag(createResizeHandler(["top"]));
+  const bindBottom = useDrag(createResizeHandler(["bottom"]));
+  const bindLeft = useDrag(createResizeHandler(["left"]));
+  const bindRight = useDrag(createResizeHandler(["right"]));
 
-  const bindTopLeft = createResizeBind(["top", "left"]);
-  const bindTopRight = createResizeBind(["top", "right"]);
-  const bindBottomLeft = createResizeBind(["bottom", "left"]);
-  const bindBottomRight = createResizeBind(["bottom", "right"]);
+  const bindTopLeft = useDrag(createResizeHandler(["top", "left"]));
+  const bindTopRight = useDrag(createResizeHandler(["top", "right"]));
+  const bindBottomLeft = useDrag(createResizeHandler(["bottom", "left"]));
+  const bindBottomRight = useDrag(createResizeHandler(["bottom", "right"]));
 
   if (data.isMaximized) return null;
 

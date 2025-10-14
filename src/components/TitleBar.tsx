@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 
 interface TitleBarProps {
@@ -26,7 +27,9 @@ const TitleBar: React.FC<TitleBarProps> = ({
   return (
     <div
       {...bind()}
-      className={`text-white px-1 flex justify-between items-center select-none ${!isMaximized && (isDragging ? 'cursor-grabbing' : 'cursor-move')} `}
+      className={`text-white px-1 flex justify-between items-center select-none ${
+        !isMaximized && (isDragging ? "cursor-grabbing" : "cursor-move")
+      } `}
       style={{
         background:
           "linear-gradient(to bottom, #3087FB 0%, #1C6AF8 14%, #1753E3 18%, #164EE0 42%, #1852E8 56%, #1A5AF5 70%, #1C64FA 84%, #1A59F2 100%)",

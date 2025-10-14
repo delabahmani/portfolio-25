@@ -5,7 +5,7 @@
   src: url("/assets/fonts/windows-xp-tahoma.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -13,7 +13,7 @@
   src: url("/assets/fonts/windows-xp-trebuchet-ms.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @theme {
@@ -25,6 +25,7 @@
   --color-xp-window: #ece9d8;
   --color-xp-taskbar: #245edb;
   --color-xp-green: #39a96b;
+  --color-xp-red: #DE482B;
 
   --font-family-sans: "Tahoma", sans-serif;
 
@@ -52,6 +53,27 @@ body,
 
 body {
   font-family: "Tahoma", sans-serif;
+}
+
+#root {
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  0% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Default cursor */
@@ -105,5 +127,5 @@ textarea {
 }
 
 .custom-text-shadow {
-  @apply drop-shadow-[0_1.4px_1.4px_rgba(0,0,0,0.8)]
+  @apply drop-shadow-[0_1.4px_1.4px_rgba(0,0,0,0.8)];
 }

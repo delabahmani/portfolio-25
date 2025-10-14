@@ -2,7 +2,7 @@ export interface IconData {
   id: string;
   name: string;
   icon: string;
-  type: "folder" | "empty" | "app" | "file";
+  type: "folder" | "empty" | "app" | "file" | "email";
   x: number;
   y: number;
   content?: IconData[];
@@ -27,4 +27,5 @@ export interface WindowData {
   originalHeight?: number;
   content?: IconData;
   zIndex: number;
+  type?: "folder" | "file" | "email" | "app" | "empty";
 }

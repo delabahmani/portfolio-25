@@ -4,6 +4,7 @@ import Icon from "./Icon";
 import { useDrag } from "@use-gesture/react";
 import TitleBar from "./TitleBar";
 import ResizeHandles from "./ResizeHandles";
+import { EmailWindow } from "./EmailWindow";
 
 interface WindowProps {
   data: WindowData;
@@ -110,6 +111,11 @@ const Window: React.FC<WindowProps> = ({
   const renderContent = () => {
     if (!data.content) return null;
 
+    // Render email form
+    if (data.type === "email") {
+      return <EmailWindow onClose={onClose} />;
+    }
+
     // Render text file content
     if (data.content.type === "file") {
       // Check if it's an image file
@@ -215,19 +221,24 @@ const Window: React.FC<WindowProps> = ({
       />
 
       {/* Menu Bar */}
-      <div className="bg-gray-100 border-b border-gray-300 px-2 py-1 text-xs">
-        <span className="hover:bg-blue-500 hover:text-white px-2 py-1 cursor-pointer">
+     <div className="flex flex-col">
+      <div className="flex items-center gap-1 px-2 py-1 border-b border-gray-400 bg-gradient-to-b from-white to-xp-gray">
+        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
           File
-        </span>
-        <span className="hover:bg-blue-500 hover:text-white px-2 py-1 cursor-pointer ml-2">
+        </button>
+        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
           Edit
-        </span>
-        <span className="hover:bg-blue-500 hover:text-white px-2 py-1 cursor-pointer ml-2">
+        </button>
+        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
           View
-        </span>
-        <span className="hover:bg-blue-500 hover:text-white px-2 py-1 cursor-pointer ml-2">
+        </button>
+        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+          Tools
+        </button>
+        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
           Help
-        </span>
+        </button>
+      </div>
       </div>
 
       {/* Address Bar (for folders) */}

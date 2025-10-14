@@ -183,8 +183,17 @@ Modern e-commerce platform with sleek design and seamless shopping experience.
     y: 310,
     content: [
       {
+        id: "email-me",
+        name: "email me",
+        icon: "/assets/icons/mail.webp",
+        type: "email",
+        x: 0,
+        y: 0,
+      },
+      {
         id: "contact-info",
         name: "contact.txt",
+
         icon: "/assets/icons/notepad.webp",
         type: "file",
         x: 0,
@@ -193,27 +202,21 @@ Modern e-commerce platform with sleek design and seamless shopping experience.
 
 I'm always open to discussing new opportunities, collaborations, or just having a chat about technology!
 
-📬 Contact Information:
-• Email: your.email@example.com
-• Phone: +1 (555) 123-4567
-• Location: Your City, State
+• Location: Toronto, Canada
 
 🌐 Online Presence:
-• Portfolio: https://your-portfolio.com
-• LinkedIn: linkedin.com/in/yourprofile
-• GitHub: github.com/yourusername
-• Twitter: @yourusername
+• LinkedIn: https://www.linkedin.com/in/delara-bahmani/
+• GitHub: https://github.com/delabahmani
 
 💼 Available For:
 • Full-time positions
 • Freelance projects
 • Contract work
-• Consulting opportunities
 
 🕒 Response Time:
 I typically respond to emails within 24 hours.
 
-Let's build something amazing together! 🚀`,
+Let's build something amazing together!`,
       },
     ],
   },

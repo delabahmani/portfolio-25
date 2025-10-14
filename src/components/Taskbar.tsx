@@ -12,6 +12,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
   onWindowToggle,
   onStartClick,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showStartMenu, _setShowStartMenu] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const isMobile = window.innerWidth <= 768;

@@ -25,9 +25,9 @@ export default async function handler(req, res) {
 
   try {
     await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>", // Resend's test domain
-      to: "delabahmani@gmail.com", // YOUR email where you want to receive messages
-      replyTo: email, // Visitor's email
+      from: "Portfolio Contact <onboarding@resend.dev>",
+      to: process.env.RECIPIENT_EMAIL,
+      replyTo: email, 
       subject: `Portfolio Contact: ${subject}`,
       html: `
         <h2>New Contact Form Submission</h2>

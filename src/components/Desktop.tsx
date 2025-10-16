@@ -58,18 +58,44 @@ const Desktop: React.FC = () => {
       windowHeight = 450;
     }
 
+    // If image file and on md+, open a larger window
+    const isDesktopViewport = window.innerWidth > 768;
+    const isImageFile =
+      icon.type === "file" &&
+      typeof icon.description === "string" &&
+      icon.description.includes("/assets/images/");
+    if (isImageFile && isDesktopViewport) {
+      windowWidth = Math.min(Math.floor(window.innerWidth * 0.9), 1400);
+      windowHeight = Math.min(Math.floor(window.innerHeight * 0.85), 900);
+    }
+
+    // Prevent windows from overlapping taskbar on open
+    const taskbarHeight = 48;
+    const availableHeight = window.innerHeight - taskbarHeight - 8;
+
+    if (windowHeight > availableHeight) {
+      windowHeight = Math.max(200, availableHeight);
+    }
+
     const centerX = (window.innerWidth - windowWidth) / 2;
-    const centerY = (window.innerHeight - windowHeight) / 2;
+    const centerY = (availableHeight - windowHeight) / 2;
+
+    const offset = windows.length * 30;
+    const x = Math.max(8, centerX + offset);
+    const y = Math.max(
+      8,
+      Math.min(centerY + offset, availableHeight - windowHeight)
+    );
 
     const newWindow: WindowData = {
       id: `window-${icon.id}-${Date.now()}`,
       title: icon.name,
       isMinimized: false,
       isMaximized: isMobile,
-      x: Math.max(0, centerX + windows.length * 30),
-      y: Math.max(0, centerY + windows.length * 30),
-      width: icon.type === "folder" ? 750 : 625,
-      height: icon.type === "folder" ? 500 : 437,
+      x,
+      y,
+      width: windowWidth,
+      height: windowHeight,
       content: icon,
       zIndex: nextZIndex,
       type: icon.type,

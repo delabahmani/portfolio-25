@@ -48,6 +48,100 @@ export const desktopIcons: IconData[] = [
     y: 180,
     content: [
       {
+        id: "woof",
+        name: "woof",
+        icon: "/assets/icons/woof.webp",
+        type: "folder",
+        x: 0,
+        y: 0,
+        content: [
+          {
+            id: "woof-img1",
+            name: "img 1",
+            icon: "/assets/images/projects/woof/woof-img1.webp",
+            type: "file",
+            x: 0,
+            y: 0,
+            description: "/assets/images/projects/woof/woof-img1.webp",
+          },
+          {
+            id: "woof-img2",
+            name: "img 2",
+            icon: "/assets/images/projects/woof/woof-img2.webp",
+            type: "file",
+            x: 0,
+            y: 0,
+            description: "/assets/images/projects/woof/woof-img2.webp",
+          },
+          {
+            id: "woof-img3",
+            name: "img 3",
+            icon: "/assets/images/projects/woof/woof-img3.webp",
+            type: "file",
+            x: 0,
+            y: 0,
+            description: "/assets/images/projects/woof/woof-img3.webp",
+          },
+
+          {
+            id: "woof-link",
+            name: "woof link",
+            icon: "/assets/icons/explorer1.webp",
+            type: "app",
+            x: 160,
+            y: 0,
+            url: "https://beagle-server.vercel.app/",
+          },
+          {
+            id: "woof-info",
+            name: "info.txt",
+            icon: "/assets/icons/notepad.webp",
+            type: "file",
+            x: 240,
+            y: 0,
+            description: `woof - crypto tax & transaction tracking SaaS
+            
+Overview:
+woof is a crypto tax and transaction tracking SaaS platform that enables users to monitor their cryptocurrency transactions, categorize wallets, and manage contacts. The platform integrates with Telegram for seamless communication and provides comprehensive transaction management with Excel export capabilities.
+
+
+Highlights:
+• Full-stack dashboard with transaction tracking, categorization, and filtering 
+• Contact and group management system for organizing crypto transactions
+• Telegram integration for user authentication and messaging
+• Transaction value cards for quick financial insights
+• Excel export functionality for transaction data
+• Wallet management with custom categorization
+• Real-time transaction monitoring with refresh capabilities
+• Settings management with tabbed interface
+• Theme switching (dark/light mode)
+
+
+Tech stack:
+• Next.js (App router)
+• TypeScript + TailwindCSS
+• NextAuth & GoogleOAuth
+• PostgreSQL + Prisma ORM
+• Telegram Bot API
+• PgAdmin for database management
+• Vercel for deployment
+• Stripe for payments
+• Neon (serverless PostgreSQL)
+
+            
+Who it's for:
+• Crypto traders and investors who need to track transactions for tax purposes
+• Users managing multiple crypto wallets and contacts
+• Anyone requiring organized crypto transaction history with categorization
+
+
+Impact:
+Built for crypto enthusiasts and traders who need a centralized platform to manage their transaction history, simplify tax reporting, and maintain organized records of their cryptocurrency activities across multiple wallets, chains, and contacts
+            `,
+          },
+        ],
+      },
+      {
         id: "nsanity",
         name: "nsanity",
         icon: "/assets/icons/nsanity.webp",
@@ -58,20 +152,74 @@ export const desktopIcons: IconData[] = [
           {
             id: "nsanity-img1",
             name: "img 1",
-            icon: "/assets/images/projects/nsanity/nsanity-img1.JPG",
+            icon: "/assets/images/projects/nsanity/nsanity-img1.webp",
             type: "file",
             x: 0,
             y: 0,
-            description: "/assets/images/projects/nsanity/nsanity-img1.JPG",
+            description: "/assets/images/projects/nsanity/nsanity-img1.webp",
           },
           {
             id: "nsanity-img2",
             name: "img 2",
-            icon: "/assets/images/nsanity-img2.webp",
+            icon: "/assets/images/projects/nsanity/nsanity-img2.webp",
             type: "file",
             x: 80,
             y: 0,
-            description: "/assets/images/projects/nsanity/screenshot2.png",
+            description: "/assets/images/projects/nsanity/nsanity-img2.webp",
+          },
+          {
+            id: "nsanity-img3",
+            name: "img 3",
+            icon: "/assets/images/projects/nsanity/nsanity-img3.webp",
+            type: "file",
+            x: 80,
+            y: 0,
+            description: "/assets/images/projects/nsanity/nsanity-img3.webp",
+          },
+          {
+            id: "nsanity-img4",
+            name: "img 4",
+            icon: "/assets/images/projects/nsanity/nsanity-img4.webp",
+            type: "file",
+            x: 80,
+            y: 0,
+            description: "/assets/images/projects/nsanity/nsanity-img4.webp",
+          },
+          {
+            id: "nsanity-img5",
+            name: "img 5",
+            icon: "/assets/images/projects/nsanity/nsanity-img5.webp",
+            type: "file",
+            x: 80,
+            y: 0,
+            description: "/assets/images/projects/nsanity/nsanity-img5.webp",
+          },
+          {
+            id: "nsanity-img6",
+            name: "img 6",
+            icon: "/assets/images/projects/nsanity/nsanity-img6.webp",
+            type: "file",
+            x: 80,
+            y: 0,
+            description: "/assets/images/projects/nsanity/nsanity-img6.webp",
+          },
+          {
+            id: "nsanity-img7",
+            name: "img 7",
+            icon: "/assets/images/projects/nsanity/nsanity-img7.webp",
+            type: "file",
+            x: 80,
+            y: 0,
+            description: "/assets/images/projects/nsanity/nsanity-img7.webp",
+          },
+          {
+            id: "nsanity-img8",
+            name: "img 8",
+            icon: "/assets/images/projects/nsanity/nsanity-img8.webp",
+            type: "file",
+            x: 80,
+            y: 0,
+            description: "/assets/images/projects/nsanity/nsanity-img8.webp",
           },
           {
             id: "nsanity-link",
@@ -89,7 +237,38 @@ export const desktopIcons: IconData[] = [
             type: "file",
             x: 240,
             y: 0,
-            description: `nsanity is an ecommerce platform made with next.js, tailwind css and typescript.`,
+            description: `nsanity - production-ready print-on-demand storefront
+            
+Overview:
+nsanity is a full-featured e-commerce storefront emphasizing conversion UX and a maintainable admin surface for creating/publishing print-on-demand products. Built to be deployable to production and extensible for additional providers/features.
+
+Highlights:
+• User accounts: email/password + Google (NextAuth), secure reset tokens (bcrypt)
+• Products: variants (type, color, size), images, multiple mockups, per-product size guides (in/cm) with diagrams
+• Admin panel: add/edit/delete products, upload designs, position design on mockups, choose Printful templates or native mockups
+• Cart & favorites: persistent for signed-in users, local state + React Context sync
+• Checkout & orders: Stripe integration, order success/failure flows, order detail pages and webhooks
+• Fulfillment: Printful integration for tempaltes, variants and mockups
+• Emails: transactional email templates (Resend) for contact and order notifications
+• Media: UploadThing for design uploads and image handling
+
+
+Tech stack:
+• Next.js (App router), TypeScript, React, TailwindCSS
+• Prisma ORM + MongoDB
+• Stripe for payments, NextAuth & GoogleOAuth, Resend for emails, UploadThing for image handling
+• Printful API for print-on-demand workflows
+• Deployed on Vercel
+
+            
+Who it's for:
+• Developers wanting a production example of integrating payments + print-on-demand
+• Small brands/businesses wanting a customizable, maintainable e-commerce storefront
+
+
+Impact:
+Built for production deployment with a focus on conversion UX, maintainable admin workflows, and reliable payment/order handling. Ideal example of integrating third-party fulfillment and payments into a modern React stack
+            `,
           },
         ],
       },
@@ -135,40 +314,27 @@ export const desktopIcons: IconData[] = [
             type: "file",
             x: 240,
             y: 0,
-            description: `🛒 Pantheras - E-commerce Platform
+            description: `pantheras - 
+            
+Overview:
 
-📋 Project Overview:
-Modern e-commerce platform with sleek design and seamless shopping experience.
 
-🔧 Technologies Used:
-• Frontend: React, TypeScript, Styled Components
-• Backend: Node.js, Express.js
-• Database: MongoDB with Mongoose
-• Payments: Stripe API integration
-• State Management: Redux Toolkit
-• Deployment: Netlify + Heroku
+Highlights:
+•
 
-✨ Key Features:
-• Product catalog with advanced filtering
-• Shopping cart and wishlist
-• Secure checkout process
-• User account management
-• Order tracking system
-• Admin dashboard
-• Mobile-responsive design
 
-🎯 Challenges Solved:
-• Payment processing integration
-• Inventory management system
-• Search and filtering logic
-• Cart state persistence
-• Image optimization
+Tech stack:
 
-💡 What I Learned:
-• E-commerce best practices
-• Payment gateway integration
-• Advanced React patterns
-• MongoDB aggregation pipelines`,
+
+            
+Who it's for:
+
+
+
+Impact:
+
+
+`,
           },
         ],
       },

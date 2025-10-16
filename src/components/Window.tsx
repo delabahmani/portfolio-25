@@ -129,7 +129,6 @@ const Window: React.FC<WindowProps> = ({
               src={data.content.description}
               alt={data.content.name}
               className="max-w-full max-h-full object-contain"
-              style={{ imageRendering: "pixelated" }}
             />
           </div>
         );
@@ -221,24 +220,24 @@ const Window: React.FC<WindowProps> = ({
       />
 
       {/* Menu Bar */}
-     <div className="flex flex-col">
-      <div className="flex items-center gap-1 px-2 py-1 border-b border-gray-400 bg-gradient-to-b from-white to-xp-gray">
-        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
-          File
-        </button>
-        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
-          Edit
-        </button>
-        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
-          View
-        </button>
-        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
-          Tools
-        </button>
-        <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
-          Help
-        </button>
-      </div>
+      <div className="flex flex-col">
+        <div className="flex items-center gap-1 px-2 py-1 border-b border-gray-400 bg-gradient-to-b from-white to-xp-gray">
+          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+            File
+          </button>
+          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+            Edit
+          </button>
+          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+            View
+          </button>
+          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+            Tools
+          </button>
+          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+            Help
+          </button>
+        </div>
       </div>
 
       {/* Address Bar (for folders) */}

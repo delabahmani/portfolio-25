@@ -27,7 +27,7 @@ const Desktop: React.FC = () => {
 
   const isMobile = window.innerWidth <= 768;
 
-  const openWindow = (icon: IconData) => {
+  const openWindow = (icon: IconData, parentFolder?: IconData) => {
     const existingWindow = windows.find((w) => w.content?.id === icon.id);
     if (existingWindow) {
       if (existingWindow.isMinimized) {
@@ -99,6 +99,7 @@ const Desktop: React.FC = () => {
       content: icon,
       zIndex: nextZIndex,
       type: icon.type,
+      parentFolder: parentFolder,
     };
 
     setWindows([...windows, newWindow]);
@@ -185,6 +186,16 @@ const Desktop: React.FC = () => {
     }
   };
 
+  const changeWindowContent = (windowId: string, newContent: IconData) => {
+    setWindows(
+      windows.map((w: WindowData) =>
+        w.id === windowId
+          ? { ...w, content: newContent, title: newContent.name }
+          : w
+      )
+    );
+  };
+
   return (
     <div
       className="w-full h-screen relative overflow-hidden select-none"
@@ -204,7 +215,7 @@ const Desktop: React.FC = () => {
             data={icon}
             isSelected={selectedIcon === icon.id}
             onSelect={() => setSelectedIcon(icon.id)}
-            onDoubleClick={() => openWindow(icon)}
+            onDoubleClick={() => openWindow(icon, undefined)}
           />
         ))}
       </div>
@@ -223,6 +234,9 @@ const Desktop: React.FC = () => {
             onOpenIcon={openWindow}
             onMove={moveWindow}
             onResize={resizeWindow}
+            onChangeContent={(newContent) =>
+              changeWindowContent(window.id, newContent)
+            }
           />
         ))}
 

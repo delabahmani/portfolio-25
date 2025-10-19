@@ -28,4 +28,5 @@ export interface WindowData {
   content?: IconData;
   zIndex: number;
   type?: "folder" | "file" | "email" | "app" | "empty";
+  parentFolder?: IconData;
 }

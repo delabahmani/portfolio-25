@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useRef, useState } from "react";
 import type { IconData, WindowData } from "../types";
 import Icon from "./Icon";
 import { useDrag } from "@use-gesture/react";
@@ -12,7 +13,8 @@ interface WindowProps {
   onMinimize: () => void;
   onMaximize: () => void;
   onFocus: () => void;
-  onOpenIcon: (icon: IconData) => void;
+  onOpenIcon: (icon: IconData, parentFolder?: IconData) => void;
+  onChangeContent: (newContent: IconData) => void;
   onMove: (id: string, x: number, y: number) => void;
   onResize: (
     id: string,
@@ -30,12 +32,14 @@ const Window: React.FC<WindowProps> = ({
   onOpenIcon,
   onMove,
   onResize,
+  onChangeContent,
 }) => {
   const [selectedFileIcon, setSelectedFileIcon] = useState<string | null>(null);
   const [isOpening, setIsOpening] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState({ x: data.x, y: data.y });
+  const windowRef = useRef<HTMLDivElement>(null);
 
   const isMobile = window.innerWidth <= 768;
 
@@ -49,6 +53,69 @@ const Window: React.FC<WindowProps> = ({
     const timer = setTimeout(() => setIsOpening(false), 50);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (windowRef.current) {
+      windowRef.current.focus();
+    }
+  }, []);
+
+  // Arrow key navigation for image files
+  useEffect(() => {
+    if (
+      data.type !== "file" ||
+      !data.content?.description?.includes("/assets/images/")
+    ) {
+      return;
+    }
+
+    if (!data.parentFolder?.content) {
+      return;
+    }
+
+    const imageFiles = data.parentFolder.content.filter(
+      (item) =>
+        item.type === "file" && item.description?.includes("/assets/images/")
+    );
+
+    if (imageFiles.length <= 1) return;
+
+    // Find current image index
+    const currentIndex = imageFiles.findIndex(
+      (img) => img.id === data.content?.id
+    );
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        (e.key !== "ArrowRight" && e.key !== "ArrowLeft") ||
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      ) {
+        return;
+      }
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (e.key === "ArrowRight") {
+        const nextIndex = (currentIndex + 1) % imageFiles.length;
+        const nextImage = imageFiles[nextIndex];
+        onChangeContent(nextImage); // Change content instead of opening new window
+      } else if (e.key === "ArrowLeft") {
+        const prevIndex =
+          (currentIndex - 1 + imageFiles.length) % imageFiles.length;
+        const prevImage = imageFiles[prevIndex];
+        onChangeContent(prevImage); // Change content instead of opening new window
+      }
+    };
+
+    const windowElement = windowRef.current;
+    if (windowElement) {
+      windowElement.addEventListener("keydown", handleKeyDown as any);
+      return () =>
+        windowElement.removeEventListener("keydown", handleKeyDown as any);
+    }
+  }, [data, onChangeContent]);
 
   const bind = useDrag(
     ({ active, movement: [mx, my], down, memo = [data.x, data.y] }) => {
@@ -104,7 +171,7 @@ const Window: React.FC<WindowProps> = ({
     if (icon.type === "app" && icon.url) {
       window.open(icon.url, "_blank");
     } else {
-      onOpenIcon(icon);
+      onOpenIcon(icon, data.content);
     }
   };
 
@@ -198,11 +265,17 @@ const Window: React.FC<WindowProps> = ({
 
   return (
     <div
-      className={`absolute bg-gray-100 border-[3px] border-[#1852E7] shadow-md flex flex-col ${
+      ref={windowRef}
+      data-window-id={data.id}
+      tabIndex={0}
+      className={`absolute bg-gray-100 border-[3px] border-[#1852E7] shadow-md flex flex-col focus:outline-none ${
         data.isMaximized ? "" : "rounded-tr-md rounded-tl-md"
       }`}
       style={windowStyle}
-      onClick={onFocus}
+      onClick={() => {
+        onFocus();
+        if (windowRef.current) windowRef.current.focus();
+      }}
     >
       {!isMobile && <ResizeHandles data={data} onResize={onResize} />}
 

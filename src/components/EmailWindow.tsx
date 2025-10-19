@@ -65,7 +65,10 @@ export const EmailWindow: React.FC<EmailWindowProps> = ({ onClose }) => {
             {status === "sending" ? "Sending..." : "Send"}
           </button>
           <div className="w-px h-6 bg-gray-400" />
-          <button className="p-1 hover:bg-blue-100 border border-transparent hover:border-blue-300 flex items-center">
+          <button
+            type="button"
+            className="p-1 hover:bg-blue-100 border border-transparent hover:border-blue-300 flex items-center"
+          >
             <img
               src="/assets/icons/attach.webp"
               alt="Attach"

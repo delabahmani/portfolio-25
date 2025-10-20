@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import type { WindowData } from "../types";
+import { useTheme } from "../hooks/UseTheme";
 
 interface TaskbarProps {
   windows: WindowData[];
@@ -12,6 +13,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
   onWindowToggle,
   onStartClick,
 }) => {
+  const { colors } = useTheme();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showStartMenu, _setShowStartMenu] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -45,8 +47,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
       className="fixed bottom-0 left-0 right-0 flex items-center justify-between px-1 select-none"
       style={{
         height: "35px",
-        background:
-          "linear-gradient(to bottom, #245EDC 0%, #1941A5 50%, #1941A5 100%)",
+        background: `linear-gradient(to bottom, ${colors.taskbar} 0%, ${colors.taskbar}dd 50%, ${colors.taskbar}dd 100%)`,
         borderTop: "1px solid #4A9EFF",
         zIndex: 1000,
       }}
@@ -69,9 +70,9 @@ const Taskbar: React.FC<TaskbarProps> = ({
       {/* Window Buttons */}
       <div className="flex-1 flex items-center gap-2 px-2">
         {windows.map((window) => (
-          <button
+           <button
             key={window.id}
-            className={`flex items-center px-1 md:px-2 py-1  text-white text-[13px] md:text-sm rounded-sm border truncate cursor-pointer ${
+            className={`flex items-center px-1 md:px-2 py-1 text-white text-[13px] md:text-sm rounded-sm border truncate cursor-pointer ${
               window.isMinimized
                 ? "border-gray-400 bg-gray-600"
                 : "border-blue-300 bg-blue-700"
@@ -80,7 +81,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
               height: isMobile ? "24px" : "30px",
               background: window.isMinimized
                 ? "linear-gradient(to bottom, #666 0%, #444 100%)"
-                : "linear-gradient(to bottom, #4A9EFF 0%, #0054E3 100%)",
+                : `linear-gradient(to bottom, ${colors.taskbar}cc 0%, ${colors.windowBorder} 100%)`,
               boxShadow: window.isMinimized
                 ? "inset 1px 1px 2px rgba(0,0,0,0.3)"
                 : "inset 1px 1px 0 rgba(255,255,255,0.3)",
@@ -118,7 +119,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
       <div
         className="flex items-center px-2 py-1 border-l border-blue-300"
         style={{
-          background: "linear-gradient(to bottom, #316AC5 0%, #1941A5 100%)",
+          background: `linear-gradient(to bottom, ${colors.taskbar} 0%, ${colors.taskbar}cc 100%)`,
           height: "26px",
         }}
       >

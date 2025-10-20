@@ -1,4 +1,5 @@
 import { desktopIcons } from "../data/portfolioData";
+import { useTheme } from "../hooks/UseTheme";
 import type { IconData } from "../types";
 
 interface StartMenuProps {
@@ -12,9 +13,25 @@ const StartMenu: React.FC<StartMenuProps> = ({
   onClose,
   onOpenIcon,
 }) => {
-  if (!isOpen) return null;
+  const { colors } = useTheme();
 
+  if (!isOpen) return null;
   const handleItemClick = (itemName: string) => {
+    if (itemName === "display properties") {
+      const displayPropertiesIcon: IconData = {
+        id: "display-properties",
+        name: "Display Properties",
+        icon: "/assets/icons/appearance.webp",
+        type: "display-properties",
+        x: 0,
+        y: 0,
+      };
+      onOpenIcon(displayPropertiesIcon);
+      onClose();
+      return;
+    }
+
+    // Handle other items besides appearance
     const item = desktopIcons.find(
       (i) => i.name.toLowerCase() === itemName.toLowerCase()
     );
@@ -49,7 +66,6 @@ const StartMenu: React.FC<StartMenuProps> = ({
       ? "w-8 h-8 md:w-10 md:h-10"
       : "w-8 h-8 md:w-10 md:h-10";
     const mailPx = isMailIcon ? (isMobile ? 32 : 39) : undefined;
-    const isControlIcon = icon?.toLowerCase().includes("control");
 
     const content = (
       <div className="group relative flex items-center gap-3 px-2 py-2.5 hover:bg-[#316AC5] hover:text-white rounded-sm cursor-pointer text-shadow-sm">
@@ -63,7 +79,6 @@ const StartMenu: React.FC<StartMenuProps> = ({
             maxWidth: "100%",
             maxHeight: "100%",
             display: "block",
-            marginLeft: isControlIcon ? "1px" : undefined,
             ...(mailPx ? { width: mailPx, height: mailPx } : {}),
           }}
         />
@@ -114,9 +129,9 @@ const StartMenu: React.FC<StartMenuProps> = ({
       className="absolute bottom-[30px] left-0 w-full max-w-[420px] h-[520px] md:h-[520px] md:w-[420px] flex flex-col font-family-tahoma text-sm shadow-xl z-50"
       style={{
         background: "linear-gradient(to right, #ffffff 55%, #d4e5f7 55%)",
-        borderRight: "3px solid #1852E7",
-        borderLeft: "3px solid #1852E7",
-        borderTop: "2px solid #1852E7",
+        borderRight: `3px solid ${colors.windowBorder}`,
+        borderLeft: `3px solid ${colors.windowBorder}`,
+        borderTop: `2px solid ${colors.windowBorder}`,
         borderRadius: "8px 8px 0 0 ",
         boxShadow: "3px -3px 10px rgba(0,0,0,0.2)",
       }}
@@ -126,8 +141,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
       <div
         className="flex items-center text-white rounded-tl-sm rounded-tr-sm"
         style={{
-          background:
-            "linear-gradient(to bottom, #3087FB 0%, #1C6AF8 14%, #1753E3 18%, #164EE0 42%, #1852E8 56%, #1A5AF5 70%, #1C64FA 84%, #1A59F2 100%)",
+          background: colors.titleBarGradient,
           height: "60px",
           fontFamily: "Trebuchet MS, sans-serif",
           fontSize: "11px",
@@ -227,9 +241,9 @@ const StartMenu: React.FC<StartMenuProps> = ({
           <div className="border-t border-xp-light-blue my-1 mx-2"></div>
           <MenuItem
             isRightPanel
-            icon="/assets/icons/control-panel.webp"
-            title="Control Panel"
-            onClick={() => handleItemClick("")}
+            icon="/assets/icons/appearance.webp"
+            title="Appearance"
+            onClick={() => handleItemClick("display properties")}
           />
           <div className="flex-1"></div>
         </div>
@@ -239,8 +253,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
       <div
         className="flex justify-end items-center p-2"
         style={{
-          background:
-            "linear-gradient(to bottom, #005CFD, #0054E3 4%, #0054E3 96%, #0042B3)",
+          background: colors.startMenuGradient,
         }}
       >
         <button className="flex items-center  text-white hover:opacity-80">

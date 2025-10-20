@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { useTheme } from "../hooks/UseTheme";
 
 interface TitleBarProps {
   title: string;
@@ -10,6 +10,7 @@ interface TitleBarProps {
   onClose: (e: React.MouseEvent) => void;
   onMinimize: (e: React.MouseEvent) => void;
   onMaximize: () => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   bind: (...args: any[]) => any;
 }
 
@@ -24,33 +25,36 @@ const TitleBar: React.FC<TitleBarProps> = ({
   onMaximize,
   bind,
 }) => {
+  const { colors } = useTheme();
+
   return (
     <div
       {...bind()}
-      className={`text-white px-1 flex justify-between items-center select-none ${
+      className={`text-white flex justify-between items-center select-none ${
         !isMaximized && (isDragging ? "cursor-grabbing" : "cursor-move")
       } `}
       style={{
-        background:
-          "linear-gradient(to bottom, #3087FB 0%, #1C6AF8 14%, #1753E3 18%, #164EE0 42%, #1852E8 56%, #1A5AF5 70%, #1C64FA 84%, #1A59F2 100%)",
+        background: colors.titleBarGradient,
         height: "28px",
         fontFamily: "Trebuchet MS, sans-serif",
         fontSize: "11px",
         borderTop: "1px solid #3D95FF",
         touchAction: "none",
+        paddingLeft: "4px",
+        paddingRight: "4px",
+        paddingTop: "2px",
+        paddingBottom: "2px",
       }}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center" style={{ gap: "6px", height: "100%" }}>
         {icon && (
           <img
             src={icon}
             className="select-none"
             style={{
-              width: 18,
-              height: 18,
+              width: 16,
+              height: 16,
               objectFit: "contain",
-              marginRight: 2,
-              marginBottom: 2,
               marginLeft: 3,
             }}
             alt={`${title} icon`}
@@ -58,13 +62,19 @@ const TitleBar: React.FC<TitleBarProps> = ({
         )}
         <span
           className="font-medium"
-          style={{ textShadow: "1px 1px 0 rgba(0, 0, 0, 0.5)" }}
+          style={{
+            textShadow: "1px 1px 0 rgba(0, 0, 0, 0.5)",
+            lineHeight: "1",
+          }}
         >
           {title}
         </span>
       </div>
 
-      <div className="flex">
+      <div
+        className="flex"
+        style={{ gap: "2px", height: "100%", alignItems: "center" }}
+      >
         {/* Minimize Button */}
         <button
           className="flex justify-center items-center font-bold cursor-pointer"
@@ -77,6 +87,8 @@ const TitleBar: React.FC<TitleBarProps> = ({
             borderRadius: "2px",
             boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
             fontSize: "11px",
+            lineHeight: "1",
+            padding: "0",
           }}
           onClick={onMinimize}
         >
@@ -96,13 +108,57 @@ const TitleBar: React.FC<TitleBarProps> = ({
               borderRadius: "2px",
               boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
               fontSize: "9px",
+              lineHeight: "1",
+              padding: "0",
             }}
             onClick={(e) => {
               e.stopPropagation();
               onMaximize();
             }}
           >
-            {isMaximized ? "⧉" : "□"}
+            {isMaximized ? (
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="4"
+                  height="4"
+                  stroke="white"
+                  strokeWidth="1"
+                />
+                <rect
+                  x="5"
+                  y="5"
+                  width="4"
+                  height="4"
+                  stroke="white"
+                  strokeWidth="1"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 10 10"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="1"
+                  y="1"
+                  width="8"
+                  height="8"
+                  stroke="white"
+                  strokeWidth="1"
+                />
+              </svg>
+            )}
           </button>
         )}
 
@@ -119,10 +175,25 @@ const TitleBar: React.FC<TitleBarProps> = ({
             boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
             fontSize: "20px",
             color: "white",
+            lineHeight: "1",
+            padding: "0",
           }}
           onClick={onClose}
         >
-          x
+          <svg
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1 1L9 9M9 1L1 9"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
         </button>
       </div>
     </div>

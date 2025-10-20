@@ -6,6 +6,8 @@ import { useDrag } from "@use-gesture/react";
 import TitleBar from "./TitleBar";
 import ResizeHandles from "./ResizeHandles";
 import { EmailWindow } from "./EmailWindow";
+import { DisplayProperties } from "./DisplayProperties";
+import { useTheme } from "../hooks/UseTheme";
 
 interface WindowProps {
   data: WindowData;
@@ -34,6 +36,7 @@ const Window: React.FC<WindowProps> = ({
   onResize,
   onChangeContent,
 }) => {
+  const { colors } = useTheme();
   const [selectedFileIcon, setSelectedFileIcon] = useState<string | null>(null);
   const [isOpening, setIsOpening] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
@@ -178,6 +181,10 @@ const Window: React.FC<WindowProps> = ({
   const renderContent = () => {
     if (!data.content) return null;
 
+    if (data.type === "display-properties") {
+      return <DisplayProperties onClose={onClose} />;
+    }
+
     // Render email form
     if (data.type === "email") {
       return <EmailWindow onClose={onClose} />;
@@ -268,13 +275,14 @@ const Window: React.FC<WindowProps> = ({
       ref={windowRef}
       data-window-id={data.id}
       tabIndex={0}
-      className={`absolute bg-gray-100 border-[3px] border-[#1852E7] shadow-md flex flex-col focus:outline-none ${
+      className={`absolute bg-gray-100 shadow-md flex flex-col focus:outline-none ${
         data.isMaximized ? "" : "rounded-tr-md rounded-tl-md"
       }`}
-      style={windowStyle}
-      onClick={() => {
-        onFocus();
-        if (windowRef.current) windowRef.current.focus();
+      style={{
+        ...windowStyle,
+        border: `3px solid ${colors.windowBorder}`,
+        transform: `${windowStyle.transform} translateZ(0)`,
+        backfaceVisibility: "hidden",
       }}
     >
       {!isMobile && <ResizeHandles data={data} onResize={onResize} />}
@@ -314,11 +322,14 @@ const Window: React.FC<WindowProps> = ({
       </div>
 
       {/* Address Bar (for folders) */}
-      {data.content?.type === "folder" && (
+      {(data.content?.type === "folder" ||
+        data.type === "display-properties") && (
         <div className="bg-white border-b border-gray-300 px-2 py-1 flex items-center">
           <span className="text-xs mr-2">Address:</span>
           <div className="bg-white border border-gray-400 px-2 py-1 text-xs flex-1">
-            {data.content.name === "projects" && data.content.content
+            {data.type === "display-properties"
+              ? "Control Panel\\Display Properties"
+              : data.content?.name === "projects" && data.content?.content
               ? `C:\\Desktop\\${data.content.name}`
               : `C:\\Desktop\\${data.title}`}
           </div>
@@ -326,16 +337,7 @@ const Window: React.FC<WindowProps> = ({
       )}
 
       {/* Content Area */}
-      <div
-        style={{
-          height:
-            data.content?.type === "folder"
-              ? "calc(100% - 80px)"
-              : "calc(100% - 60px)",
-        }}
-      >
-        {renderContent()}
-      </div>
+      <div className="flex-1 overflow-hidden">{renderContent()}</div>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import Icon from "./Icon";
 import Window from "./Window";
 import Taskbar from "./Taskbar";
 import StartMenu from "./StartMenu";
+import { useTheme } from "../hooks/UseTheme";
 
 const Desktop: React.FC = () => {
   const [fadeIn, setFadeIn] = useState(false);
@@ -12,6 +13,7 @@ const Desktop: React.FC = () => {
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
   const [nextZIndex, setNextZIndex] = useState(1000);
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
+  const { wallpaper } = useTheme();
 
   useEffect(() => {
     setTimeout(() => setFadeIn(true), 100);
@@ -205,7 +207,7 @@ const Desktop: React.FC = () => {
     <div
       className="w-full h-screen relative overflow-hidden select-none transition-opacity duration-1000"
       style={{
-        backgroundImage: "url('/assets/images/bliss.webp')",
+        backgroundImage: `url('${wallpaper}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

@@ -54,7 +54,7 @@ export const BootScreen: React.FC<BootScreenProps> = ({ onFinish }) => {
         style={{ opacity: fadeIn ? 1 : 0 }}
       >
         <img
-          src="/icon.webp"
+          src="./icon.webp"
           alt="Windows XP Logo"
           className="w-80 h-auto"
           style={{

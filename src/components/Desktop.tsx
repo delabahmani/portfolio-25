@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { IconData, WindowData } from "../types";
 import { desktopIcons } from "../data/portfolioData";
 import Icon from "./Icon";
@@ -7,10 +7,15 @@ import Taskbar from "./Taskbar";
 import StartMenu from "./StartMenu";
 
 const Desktop: React.FC = () => {
+  const [fadeIn, setFadeIn] = useState(false);
   const [windows, setWindows] = useState<WindowData[]>([]);
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
   const [nextZIndex, setNextZIndex] = useState(1000);
   const [isStartMenuOpen, setIsStartMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setFadeIn(true), 100);
+  });
 
   const handleDesktopClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -198,12 +203,13 @@ const Desktop: React.FC = () => {
 
   return (
     <div
-      className="w-full h-screen relative overflow-hidden select-none"
+      className="w-full h-screen relative overflow-hidden select-none transition-opacity duration-1000"
       style={{
-        backgroundImage: "url('/assets/images/hills-bg.webp')",
+        backgroundImage: "url('/assets/images/bliss.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        opacity: fadeIn ? 1 : 0,
       }}
       onClick={handleDesktopClick}
     >

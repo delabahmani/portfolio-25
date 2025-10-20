@@ -16,6 +16,14 @@
   font-display: block;
 }
 
+.tahoma-bold {
+  font-family: "Tahoma", sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.2px;
+  transform: scaleX(1.05);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
 @theme {
   --color-xp-blue: #0054e3;
   --color-xp-light-blue: #4a9eff;
@@ -26,6 +34,7 @@
   --color-xp-taskbar: #245edb;
   --color-xp-green: #39a96b;
   --color-xp-red: #DE482B;
+  --color-xp-dark-blue: #0a256a;
 
   --font-family-sans: "Tahoma", sans-serif;
 
@@ -49,31 +58,11 @@ body,
   height: 100%;
   width: 100%;
   overflow: hidden;
+  background: black;
 }
 
 body {
   font-family: "Tahoma", sans-serif;
-}
-
-#root {
-  animation: fadeIn 0.8s ease-in;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  0% {
-    opacity: 0.25;
-  }
-
-  50% {
-    opacity: 0.5;
-  }
-
-  100% {
-    opacity: 1;
-  }
 }
 
 /* Default cursor */

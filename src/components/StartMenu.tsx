@@ -41,18 +41,42 @@ const StartMenu: React.FC<StartMenuProps> = ({
     isLarge?: boolean;
     isRightPanel?: boolean;
   }) => {
+    const isMobile = window.innerWidth <= 768;
+    const isMailIcon = icon?.toLowerCase().includes("mail");
+    const imgClass = isLarge
+      ? "w-10 h-10 md:w-10 md:h-10"
+      : isRightPanel
+      ? "w-8 h-8 md:w-10 md:h-10"
+      : "w-8 h-8 md:w-10 md:h-10";
+    const mailPx = isMailIcon ? (isMobile ? 32 : 39) : undefined;
+    const isControlIcon = icon?.toLowerCase().includes("control");
+
     const content = (
-      <div className="group relative flex items-center gap-3 px-2 py-1.5 hover:bg-[#316AC5] hover:text-white rounded-sm cursor-pointer text-shadow-sm">
+      <div className="group relative flex items-center gap-3 px-2 py-2.5 hover:bg-[#316AC5] hover:text-white rounded-sm cursor-pointer text-shadow-sm">
         <img
           src={icon}
           alt={title}
-          className={` ${isLarge ? "w-10 h-10" : "w-16 h-16"}`}
+          className={`flex-shrink-0 ${imgClass}`}
+          style={{
+            objectFit: isMailIcon ? "cover" : "contain",
+            objectPosition: "center",
+            maxWidth: "100%",
+            maxHeight: "100%",
+            display: "block",
+            marginLeft: isControlIcon ? "1px" : undefined,
+            ...(mailPx ? { width: mailPx, height: mailPx } : {}),
+          }}
         />
         <div>
           <p
-            className={`text-xl ${
-              isRightPanel ? "font-semibold text-base" : ""
-            }`}
+            className={`text-xl  ${
+              isRightPanel
+                ? "font-semibold text-base text-xp-dark-blue tahoma-bold"
+                : ""
+            } ${
+              isRightPanel ? "truncate max-w-[100px] md:max-w-[140px]" : ""
+            } group-hover:text-white`}
+            title={isRightPanel ? title : undefined}
           >
             {title}
           </p>
@@ -87,7 +111,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
 
   return (
     <div
-      className="absolute bottom-[30px] left-0 w-[420px] h-[520px] flex flex-col font-family-tahoma text-sm shadow-xl z-50"
+      className="absolute bottom-[30px] left-0 w-full max-w-[420px] h-[520px] md:h-[520px] md:w-[420px] flex flex-col font-family-tahoma text-sm shadow-xl z-50"
       style={{
         background: "linear-gradient(to right, #ffffff 55%, #d4e5f7 55%)",
         borderRight: "3px solid #1852E7",
@@ -184,8 +208,8 @@ const StartMenu: React.FC<StartMenuProps> = ({
         <div className="w-[45%] flex flex-col p-1">
           <MenuItem
             isRightPanel
-            icon="/assets/icons/folder-open-note.webp"
-            title="Projects"
+            icon="/assets/icons/folder-note.webp"
+            title="My Projects"
             onClick={() => handleItemClick("projects")}
           />
           <MenuItem
@@ -213,19 +237,17 @@ const StartMenu: React.FC<StartMenuProps> = ({
 
       {/* Footer */}
       <div
-        className="flex justify-end items-center p-2" // CHANGE: Adjusted padding
+        className="flex justify-end items-center p-2"
         style={{
           background:
-            "linear-gradient(to bottom, #005CFD, #0054E3 4%, #0054E3 96%, #0042B3)", // CHANGE: More accurate gradient
+            "linear-gradient(to bottom, #005CFD, #0054E3 4%, #0054E3 96%, #0042B3)",
         }}
       >
-        <button
-          className="flex items-center  text-white hover:opacity-80"
-        >
+        <button className="flex items-center  text-white hover:opacity-80">
           <img
             src="/assets/icons/log-off.webp"
             alt="Log Off"
-            className="w-10 h-10"
+            className="w-10 h-10 md:w-12"
           />
           <span className="">Log Off</span>
         </button>
@@ -236,7 +258,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
           <img
             src="/assets/icons/shut-down.webp"
             alt="Turn Off"
-            className="w-10 h-10"
+            className="w-10 h-10 md:w-12"
           />
           <span className="">Turn Off Browser</span>
         </button>

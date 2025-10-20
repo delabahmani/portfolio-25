@@ -46,7 +46,7 @@ export const BootScreen: React.FC<BootScreenProps> = ({ onFinish }) => {
   return (
     <div
       className="fixed inset-0 flex flex-col items-center justify-center transition-opacity duration-700"
-      style={{ background: "black", zIndex: 9999, opacity: fadeOut ? 0 : 1, }}
+      style={{ background: "black", zIndex: 9999, opacity: fadeOut ? 0 : 1 }}
     >
       {/* Windows XP logo */}
       <div
@@ -54,7 +54,7 @@ export const BootScreen: React.FC<BootScreenProps> = ({ onFinish }) => {
         style={{ opacity: fadeIn ? 1 : 0 }}
       >
         <img
-          src="./icon.webp"
+          src="/assets/icons/logo.webp"
           alt="Windows XP Logo"
           className="w-80 h-auto"
           style={{

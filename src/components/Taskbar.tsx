@@ -75,15 +75,16 @@ const Taskbar: React.FC<TaskbarProps> = ({
               window.isMinimized
                 ? "border-gray-400 bg-gray-600"
                 : "border-blue-300 bg-blue-700"
-            } ${isMobile ? "max-w-14 min-w-10" : "max-w-40 min-w-32"} `}
+            } ${isMobile ? "max-w-28 min-w-10" : "max-w-40 min-w-32"} `}
             style={{
-              height: "24px",
+              height: isMobile ? "24px" : "30px",
               background: window.isMinimized
                 ? "linear-gradient(to bottom, #666 0%, #444 100%)"
                 : "linear-gradient(to bottom, #4A9EFF 0%, #0054E3 100%)",
               boxShadow: window.isMinimized
                 ? "inset 1px 1px 2px rgba(0,0,0,0.3)"
                 : "inset 1px 1px 0 rgba(255,255,255,0.3)",
+              alignItems: "center",
             }}
             onClick={() => {
               onWindowToggle(window.id);
@@ -91,10 +92,24 @@ const Taskbar: React.FC<TaskbarProps> = ({
           >
             <img
               src={window.content?.icon}
-              className="w-8 h-8 mr-1 flex-shrink-0"
-              style={{ imageRendering: "pixelated" }}
+              alt={window.title}
+              className="md:mr-2 mr-[2px] flex-shrink-0"
+              style={{
+                display: "block",
+                width: "auto",
+                marginTop: 0,
+                marginBottom: 0,
+                height: isMobile ? 16 : 20,
+                objectFit: "contain",
+                objectPosition: "center",
+              }}
             />
-            <span className="truncate custom-text-shadow">{window.title}</span>
+            <span
+              className="truncate custom-text-shadow leading-none"
+              style={{ fontSize: isMobile ? "15px" : "18px", marginBottom: 2 }}
+            >
+              {window.title}
+            </span>
           </button>
         ))}
       </div>

@@ -100,12 +100,12 @@ const Window: React.FC<WindowProps> = ({
       if (e.key === "ArrowRight") {
         const nextIndex = (currentIndex + 1) % imageFiles.length;
         const nextImage = imageFiles[nextIndex];
-        onChangeContent(nextImage); // Change content instead of opening new window
+        onChangeContent(nextImage);
       } else if (e.key === "ArrowLeft") {
         const prevIndex =
           (currentIndex - 1 + imageFiles.length) % imageFiles.length;
         const prevImage = imageFiles[prevIndex];
-        onChangeContent(prevImage); // Change content instead of opening new window
+        onChangeContent(prevImage);
       }
     };
 

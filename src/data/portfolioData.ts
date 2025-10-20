@@ -86,7 +86,7 @@ export const desktopIcons: IconData[] = [
           {
             id: "woof-link",
             name: "woof link",
-            icon: "/assets/icons/explorer1.webp",
+            icon: "/assets/icons/explorer.webp",
             type: "app",
             x: 160,
             y: 0,
@@ -224,7 +224,7 @@ Built for crypto enthusiasts and traders who need a centralized platform to mana
           {
             id: "nsanity-link",
             name: "nsanity link",
-            icon: "/assets/icons/explorer1.webp",
+            icon: "/assets/icons/explorer.webp",
             type: "app",
             x: 160,
             y: 0,
@@ -283,7 +283,7 @@ Built for production deployment with a focus on conversion UX, maintainable admi
           {
             id: "pantheras-img1",
             name: "img 1",
-            icon: "/assets/icons/folder-open-note.webp",
+            icon: "/assets/icons/folder-note.webp",
             type: "file",
             x: 0,
             y: 0,
@@ -292,7 +292,7 @@ Built for production deployment with a focus on conversion UX, maintainable admi
           {
             id: "pantheras-img2",
             name: "img 2",
-            icon: "/assets/icons/folder-open-note.webp",
+            icon: "/assets/icons/folder-note.webp",
             type: "file",
             x: 80,
             y: 0,
@@ -301,7 +301,7 @@ Built for production deployment with a focus on conversion UX, maintainable admi
           {
             id: "pantheras-link",
             name: "link to site",
-            icon: "/assets/icons/explorer2.webp",
+            icon: "/assets/icons/explorer.webp",
             type: "app",
             x: 160,
             y: 0,

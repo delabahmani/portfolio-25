@@ -44,13 +44,20 @@ const TitleBar: React.FC<TitleBarProps> = ({
         {icon && (
           <img
             src={icon}
-            className="w-4 h-4"
-            style={{ imageRendering: "pixelated" }}
+            className="select-none"
+            style={{
+              width: 18,
+              height: 18,
+              objectFit: "contain",
+              marginRight: 2,
+              marginBottom: 2,
+              marginLeft: 3,
+            }}
             alt={`${title} icon`}
           />
         )}
         <span
-          className="font-bold"
+          className="font-medium"
           style={{ textShadow: "1px 1px 0 rgba(0, 0, 0, 0.5)" }}
         >
           {title}

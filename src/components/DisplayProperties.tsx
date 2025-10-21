@@ -207,7 +207,9 @@ export const DisplayProperties: React.FC<DisplayPropertiesProps> = ({
                     alt={wp.name}
                     className="w-16 h-12 object-cover border border-gray-400"
                   />
-                  <span className="text-sm">{wp.name}</span>
+                  <span className="text-base md:text-xl tracking-wide">
+                    {wp.name}
+                  </span>
                 </button>
               ))}
             </div>
@@ -217,7 +219,7 @@ export const DisplayProperties: React.FC<DisplayPropertiesProps> = ({
               <img
                 src={wallpaper}
                 alt="Preview"
-                className="w-full h-32 object-cover"
+                className="w-full h-32 md:h-40 object-cover"
               />
             </div>
           </div>

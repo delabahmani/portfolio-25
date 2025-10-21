@@ -63,6 +63,9 @@ const Desktop: React.FC = () => {
     } else if (icon.type === "email") {
       windowWidth = 600;
       windowHeight = 450;
+    } else if (icon.type === "display-properties") {
+      windowWidth = 900;
+      windowHeight = 700;
     }
 
     // If image file and on md+, open a larger window

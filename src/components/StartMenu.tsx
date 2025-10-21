@@ -131,12 +131,11 @@ const StartMenu: React.FC<StartMenuProps> = ({
       style={{
         bottom: `${TASKBAR_HEIGHT}px`,
         background: "linear-gradient(to right, #ffffff 55%, #d4e5f7 55%)",
-        borderRight: `3px solid ${colors.windowBorder}`,
-        borderLeft: `3px solid ${colors.windowBorder}`,
-        borderTop: `2px solid ${colors.windowBorder}`,
+        border: `3px solid ${colors.windowBorder}`,
+        borderBottom: "0",
         borderRadius: "8px 8px 0 0 ",
         boxShadow: "3px -3px 10px rgba(0,0,0,0.2)",
-        zIndex: 20001,
+        zIndex: 25000,
       }}
       onClick={(e) => e.stopPropagation()}
     >

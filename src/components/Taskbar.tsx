@@ -49,7 +49,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
         height: "40px",
         background: `linear-gradient(to bottom, ${colors.taskbar} 0%, ${colors.taskbar}dd 50%, ${colors.taskbar}dd 100%)`,
         borderTop: "1px solid #4A9EFF",
-        zIndex: 20000,
+        zIndex: 30000,
       }}
     >
       {/* Start Button */}

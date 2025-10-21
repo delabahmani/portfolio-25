@@ -131,9 +131,11 @@ const StartMenu: React.FC<StartMenuProps> = ({
       style={{
         bottom: "calc(40px + env(safe-area-inset-bottom))",
         background: "linear-gradient(to right, #ffffff 55%, #d4e5f7 55%)",
-        border: `3px solid ${colors.windowBorder}`,
+        border: `2px solid ${colors.windowBorder}`,
         borderBottom: "0",
         borderRadius: "8px 8px 0 0 ",
+        backgroundClip: "padding-box",
+        outline: `1px solid ${colors.windowBorder}`,
         boxShadow: "3px -3px 10px rgba(0,0,0,0.2)",
         zIndex: 25000,
       }}

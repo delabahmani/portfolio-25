@@ -6,12 +6,13 @@ import { ThemeProvider } from "./components/ThemeProvider";
 function App() {
   const [isBooting, setIsBooting] = useState(true);
 
-  if (isBooting) {
-    return <BootScreen onFinish={() => setIsBooting(false)} />;
-  }
   return (
     <ThemeProvider>
-      <Desktop />
+      {isBooting ? (
+        <BootScreen onFinish={() => setIsBooting(false)} />
+      ) : (
+        <Desktop />
+      )}
     </ThemeProvider>
   );
 }

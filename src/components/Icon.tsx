@@ -22,25 +22,25 @@ const Icon: React.FC<IconProps> = ({
   const isDesktopFolder = variant === "desktop" && data.type === "folder";
   const isWindow = variant === "window";
 
+  const DESKTOP_Y_SCALE = isMobile ? 1.25 : 1.1;
+
   const imgPx = isMobile
     ? isWindow
-      ? 72 // mobile, icons inside folders
+      ? 55 // mobile, icons inside folders
       : isDesktopFolder
-      ? 72 // mobile, desktop folder icons
+      ? 60 // mobile, desktop folder icons
       : 112 // mobile desktop non-folder icons
     : isDesktopFolder
-    ? 56 // desktop folder icons
+    ? 60 // desktop folder icons
     : isWindow
     ? 48 // desktop window icons
     : 80; // desktop non-folder icons
 
-  const outerSizeClass = isMobile
-    ? isWindow
-      ? "w-28 h-28"
-      : variant === "desktop"
-      ? "lg:w-24 lg:h-24 h-28 w-28"
-      : "lg:w-24 lg:h-24 h-18 w-18"
-    : "lg:w-24 lg:h-24 h-18 w-18";
+  const outerSizeClass = isWindow
+    ? isMobile
+      ? "w-28 min-h-28"
+      : "w-24 min-h-24"
+    : "";
 
   const labelClass = isMobile
     ? isWindow
@@ -51,6 +51,9 @@ const Icon: React.FC<IconProps> = ({
     : isDesktopFolder
     ? "text-sm"
     : "text-xl";
+
+  const positionClass = variant === "desktop" ? "absolute" : "relative";
+  const desktopBoxSize = imgPx + 48;
 
   // Handle double-tap on mobile
   const handleTouch = () => {
@@ -64,22 +67,23 @@ const Icon: React.FC<IconProps> = ({
     }
   };
 
-  const textClasses =
-    variant === "desktop"
-      ? "text-white drop-shadow-[0_1.4px_1.4px_rgba(0,0,0,0.9)]"
-      : "text-black text-shadow-sm";
-
   return (
     <div
-      className={`absolute flex flex-col p-2 cursor-pointer items-center justify-center ${outerSizeClass} rounded-sm ${
+      className={`${positionClass} flex flex-col p-2 cursor-pointer items-center justify-center ${outerSizeClass} rounded-sm ${
         isSelected
           ? "bg-blue-300/20 border border-blue-300/50 rounded-sm"
           : "border border-transparent"
       } hover:bg-blue-200/30 transition-colors duration-150 hover:rounded-sm`}
-      style={{
-        left: data.x,
-        top: data.y,
-      }}
+      style={
+        variant === "desktop"
+          ? {
+              left: data.x,
+              top: (data.y ?? 0) * DESKTOP_Y_SCALE,
+              width: desktopBoxSize,
+              minHeight: desktopBoxSize,
+            }
+          : undefined
+      }
       onClick={onSelect}
       onDoubleClick={!isMobile ? onDoubleClick : undefined}
       onTouchEnd={isMobile ? handleTouch : undefined}
@@ -110,7 +114,11 @@ const Icon: React.FC<IconProps> = ({
       </div>
 
       <span
-        className={`text-center font-family-tahoma text-xl ${labelClass} ${textClasses} mt-2`}
+        className={`text-center font-family-tahoma text-xl ${labelClass} ${
+          variant === "desktop"
+            ? "text-white drop-shadow-[0_1.4px_1.4px_rgba(0,0,0,0.9)]"
+            : "text-black text-shadow-sm"
+        } mt-2`}
       >
         {data.name}
       </span>

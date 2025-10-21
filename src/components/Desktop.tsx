@@ -80,8 +80,9 @@ const Desktop: React.FC = () => {
     }
 
     // Prevent windows from overlapping taskbar on open
-    const taskbarHeight = 48;
-    const availableHeight = window.innerHeight - taskbarHeight - 8;
+    const TASKBAR_HEIGHT = 40;
+    const taskbarHeight = TASKBAR_HEIGHT;
+    const availableHeight = window.innerHeight - taskbarHeight;
 
     if (windowHeight > availableHeight) {
       windowHeight = Math.max(200, availableHeight);

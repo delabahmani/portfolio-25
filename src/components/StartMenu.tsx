@@ -14,6 +14,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
   onOpenIcon,
 }) => {
   const { colors } = useTheme();
+  const TASKBAR_HEIGHT = 40;
 
   if (!isOpen) return null;
   const handleItemClick = (itemName: string) => {
@@ -126,14 +127,16 @@ const StartMenu: React.FC<StartMenuProps> = ({
 
   return (
     <div
-      className="absolute bottom-[30px] left-0 w-full max-w-[420px] h-[520px] md:h-[520px] md:w-[420px] flex flex-col font-family-tahoma text-sm shadow-xl z-50"
+      className="absolute left-0 w-full max-w-[420px] h-[520px] md:h-[520px] md:w-[420px] flex flex-col font-family-tahoma text-sm shadow-xl z-50"
       style={{
+        bottom: `${TASKBAR_HEIGHT}px`,
         background: "linear-gradient(to right, #ffffff 55%, #d4e5f7 55%)",
         borderRight: `3px solid ${colors.windowBorder}`,
         borderLeft: `3px solid ${colors.windowBorder}`,
         borderTop: `2px solid ${colors.windowBorder}`,
         borderRadius: "8px 8px 0 0 ",
         boxShadow: "3px -3px 10px rgba(0,0,0,0.2)",
+        zIndex: 20001,
       }}
       onClick={(e) => e.stopPropagation()}
     >

@@ -220,28 +220,26 @@ const Window: React.FC<WindowProps> = ({
 
     // Render folder content (icon grid)
     if (data.content.type === "folder" && data.content.content) {
-      const isMobile = window.innerWidth <= 768;
-
       return (
-        <div className="bg-white h-full relative overflow-auto">
-          {data.content.content.map((icon, i) => (
-            <Icon
-              key={icon.id}
-              data={{
-                ...icon,
-                x: isMobile
-                  ? 30 + Math.floor(i / 3) * 150 // New column every 3 items
-                  : 30 + (i % 4) * 150, // 4 items per row
-                y: isMobile
-                  ? 30 + (i % 3) * 120 // 3 items per column
-                  : 30 + Math.floor(i / 4) * 100, // New row every 4 items
-              }}
-              isSelected={selectedFileIcon === icon.id}
-              onSelect={() => setSelectedFileIcon(icon.id)}
-              onDoubleClick={() => handleIconDoubleClick(icon)}
-              variant="window"
-            />
-          ))}
+        <div className="bg-white h-full overflow-auto p-3">
+          <div
+            className="
+              grid gap-y-4 justify-items-center content-start
+              [grid-template-columns:repeat(auto-fill,minmax(110px,1fr))]
+              sm:[grid-template-columns:repeat(auto-fill,minmax(128px,1fr))]
+            "
+          >
+            {data.content.content.map((icon) => (
+              <Icon
+                key={icon.id}
+                data={icon}
+                isSelected={selectedFileIcon === icon.id}
+                onSelect={() => setSelectedFileIcon(icon.id)}
+                onDoubleClick={() => handleIconDoubleClick(icon)}
+                variant="window"
+              />
+            ))}
+          </div>
         </div>
       );
     }
@@ -256,7 +254,7 @@ const Window: React.FC<WindowProps> = ({
           left: 0,
           top: 0,
           width: "100vw",
-          height: "calc(100vh - 30px)",
+          height: "calc(100vh - 40px)",
         }
       : {
           left: position.x,

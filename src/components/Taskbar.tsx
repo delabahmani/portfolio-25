@@ -46,10 +46,10 @@ const Taskbar: React.FC<TaskbarProps> = ({
     <div
       className="fixed bottom-0 left-0 right-0 flex items-center justify-between px-1 select-none"
       style={{
-        height: "35px",
+        height: "40px",
         background: `linear-gradient(to bottom, ${colors.taskbar} 0%, ${colors.taskbar}dd 50%, ${colors.taskbar}dd 100%)`,
         borderTop: "1px solid #4A9EFF",
-        zIndex: 1000,
+        zIndex: 20000,
       }}
     >
       {/* Start Button */}
@@ -70,7 +70,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
       {/* Window Buttons */}
       <div className="flex-1 flex items-center gap-2 px-2">
         {windows.map((window) => (
-           <button
+          <button
             key={window.id}
             className={`flex items-center px-1 md:px-2 py-1 text-white text-[13px] md:text-sm rounded-sm border truncate cursor-pointer ${
               window.isMinimized

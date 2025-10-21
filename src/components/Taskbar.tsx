@@ -46,7 +46,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
     <div
       className="fixed bottom-0 left-0 right-0 flex items-center justify-between px-1 select-none"
       style={{
-        height: "40px",
+        height: "calc(40px + env(safe-area-inset-bottom))",
         background: `linear-gradient(to bottom, ${colors.taskbar} 0%, ${colors.taskbar}dd 50%, ${colors.taskbar}dd 100%)`,
         borderTop: "1px solid #4A9EFF",
         zIndex: 30000,

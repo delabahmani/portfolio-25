@@ -127,7 +127,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
 
   return (
     <div
-      className="absolute left-0 w-full max-w-[420px] h-[520px] md:h-[520px] md:w-[420px] flex flex-col font-family-tahoma text-sm shadow-xl z-50"
+      className="fixed left-0 w-full max-w-[420px] h-[520px] md:h-[520px] md:w-[420px] flex flex-col font-family-tahoma text-sm shadow-xl z-50"
       style={{
         bottom: "calc(40px + env(safe-area-inset-bottom))",
         background: "linear-gradient(to right, #ffffff 55%, #d4e5f7 55%)",

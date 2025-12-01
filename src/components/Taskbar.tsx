@@ -54,7 +54,7 @@ const Taskbar: React.FC<TaskbarProps> = ({
     >
       {/* Start Button */}
       <button
-        className="flex items-center px-4 py-1 text-white font-bold text-xs rounded-sm border border-green-600"
+        className="flex items-center px-4 md:px-4 md:py-3.5 py-1 text-white font-bold text-xs md:text-lg tracking-widest italic rounded-sm border border-green-600 text-shadow-lg"
         style={{
           background: showStartMenu
             ? "linear-gradient(to bottom, #2F5F2F 0%, #1F4F1F 100%)"
@@ -64,6 +64,16 @@ const Taskbar: React.FC<TaskbarProps> = ({
         }}
         onClick={handleStartClick}
       >
+        <img
+          src="/assets/icons/logo.webp"
+          alt="logo"
+          className="mr-1 md:mr-2 shadow-lg"
+          style={{
+            height: isMobile ? "16px" : "20px",
+            width: "auto",
+            objectFit: "contain",
+          }}
+        />
         start
       </button>
 

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { desktopIcons } from "../data/portfolioData";
 import { useTheme } from "../hooks/UseTheme";
 import type { IconData } from "../types";
@@ -14,7 +15,33 @@ const StartMenu: React.FC<StartMenuProps> = ({
   onOpenIcon,
 }) => {
   const { colors } = useTheme();
-  // const TASKBAR_HEIGHT = 40;
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!isOpen) return;
+
+      const target = event.target as HTMLElement;
+
+      // Don't close if clicking the start button itself
+      if (
+        target.closest("button")?.textContent?.toLowerCase().includes("start")
+      ) {
+        return;
+      }
+
+      // Close if clicking outside the menu
+      if (menuRef.current && !menuRef.current.contains(target)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
 
   if (!isOpen) return null;
   const handleItemClick = (itemName: string) => {
@@ -127,6 +154,7 @@ const StartMenu: React.FC<StartMenuProps> = ({
 
   return (
     <div
+      ref={menuRef}
       className="fixed left-0 w-full max-w-[420px] h-[520px] md:h-[520px] md:w-[420px] flex flex-col font-family-tahoma text-sm shadow-xl z-50"
       style={{
         bottom: "calc(40px + env(safe-area-inset-bottom))",

@@ -251,6 +251,7 @@ Highlights:
 • Fulfillment: Printful integration for tempaltes, variants and mockups
 • Emails: transactional email templates (Resend) for contact and order notifications
 • Media: UploadThing for design uploads and image handling
+• AI Features: Gemini Chatbot integration and Google Cloud usage for enhanced functionality
 
 
 Tech stack:
@@ -258,6 +259,7 @@ Tech stack:
 • Prisma ORM + MongoDB
 • Stripe for payments, NextAuth & GoogleOAuth, Resend for emails, UploadThing for image handling
 • Printful API for print-on-demand workflows
+• Gemini Chatbot and Google Cloud Console for AI features
 • Deployed on Vercel
 
             

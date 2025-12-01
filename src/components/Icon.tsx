@@ -20,6 +20,7 @@ const Icon: React.FC<IconProps> = ({
   const isMobile = window.innerWidth <= 768;
 
   const isDesktopFolder = variant === "desktop" && data.type === "folder";
+  const isDesktopApp = variant === "desktop" && data.type === "app";
   const isWindow = variant === "window";
 
   const DESKTOP_Y_SCALE = isMobile ? 1.25 : 1.1;
@@ -27,10 +28,10 @@ const Icon: React.FC<IconProps> = ({
   const imgPx = isMobile
     ? isWindow
       ? 55 // mobile, icons inside folders
-      : isDesktopFolder
+      : isDesktopFolder || isDesktopApp
       ? 60 // mobile, desktop folder icons
       : 112 // mobile desktop non-folder icons
-    : isDesktopFolder
+    : isDesktopFolder || isDesktopApp
     ? 60 // desktop folder icons
     : isWindow
     ? 48 // desktop window icons

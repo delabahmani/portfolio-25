@@ -319,22 +319,30 @@ Built for production deployment with a focus on conversion UX, maintainable admi
             description: `pantheras - 
             
 Overview:
+Worked with local businesses to design and launch websites and lightweight apps.
 
 
 Highlights:
-•
+• Delivered custom-built, responsive websites using React, Next.js, and TailwindCSS.
+• Integrated contact forms, booking systems, and local SEO strategies.
+• Provided clients with user-friendly Admin portals where they can post images, products, and complete CRUD operations using MongoDB, Prisma, AWS S3, and CloudFront.
+• Balanced multiple projects and maintained ongoing client support relationships. 
 
 
 Tech stack:
-
+• React, Next.js, TailwindCSS
+• MongoDB, Prisma ORM
+• AWS S3 and CloudFront
 
             
 Who it's for:
-
+• Local businesses needing a professional online presence
+• Small business owners who want to manage their own content without technical expertise
+• Entrepreneurs looking for affordable, custom web solutions
 
 
 Impact:
-
+Helped local businesses establish their digital presence, increase customer engagement, and streamline content management. Enabled non-technical clients to independently update their websties, reducing their reliance on developers for day-to-day changes. 
 
 `,
           },
@@ -387,5 +395,14 @@ I typically respond to emails within 24 hours.
 Let's build something amazing together!`,
       },
     ],
+  },
+  {
+    id: "resume",
+    name: "resume.exe",
+    icon: "/assets/icons/install.webp",
+    type: "app",
+    x: 50,
+    y: 440,
+    url: "/assets/documents/resume.pdf",
   },
 ];

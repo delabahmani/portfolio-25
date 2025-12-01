@@ -35,6 +35,17 @@ const Desktop: React.FC = () => {
   const isMobile = window.innerWidth <= 768;
 
   const openWindow = (icon: IconData, parentFolder?: IconData) => {
+    // Handle resume download
+    if (icon.id === "resume" && icon.url) {
+      const link = document.createElement("a");
+      link.href = icon.url;
+      link.download = "Delara_Bahmani_Resume_2025.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
     const existingWindow = windows.find((w) => w.content?.id === icon.id);
     if (existingWindow) {
       if (existingWindow.isMinimized) {

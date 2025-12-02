@@ -20,7 +20,9 @@ const Icon: React.FC<IconProps> = ({
   const isMobile = window.innerWidth <= 768;
 
   const isDesktopFolder = variant === "desktop" && data.type === "folder";
-  const isDesktopApp = variant === "desktop" && data.type === "app";
+  const isDesktopApp =
+    variant === "desktop" &&
+    (data.type === "app" || data.type === "media-player");
   const isWindow = variant === "window";
 
   const DESKTOP_Y_SCALE = isMobile ? 1.25 : 1.1;

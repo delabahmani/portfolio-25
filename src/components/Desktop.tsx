@@ -77,6 +77,9 @@ const Desktop: React.FC = () => {
     } else if (icon.type === "display-properties") {
       windowWidth = 900;
       windowHeight = 700;
+    } else if (icon.type === "media-player") {
+      windowWidth = 500;
+      windowHeight = 440;
     }
 
     // If image file and on md+, open a larger window

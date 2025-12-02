@@ -1,0 +1,427 @@
+/* Controls container */
+.wmp-controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 12px 16px;
+  background: linear-gradient(to bottom, #5066ae, #8a9ddf);
+  position: relative;
+  height: 52px;
+}
+
+/* Base button styles */
+.wmp-button {
+  position: absolute;
+  border: none;
+  background: linear-gradient(to bottom, #5066ae, #8a9ddf);
+  cursor: pointer;
+  padding: 0;
+}
+
+.wmp-button-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  transition: box-shadow 0.3s ease;
+  background: radial-gradient(circle at 50% 15%, #fff 0, #9dacc7 100%);
+  box-shadow: 
+    inset 0 -1px 2px 1px #030a46,
+    inset 0 -2px 1px #235aff,
+    inset 3px -3px 2px #dfe3ec,
+    inset 0 -1px 1px #081e81,
+    inset 0 -5px 3px #7083ad,
+    0 0 1px 0 #222a7a;
+}
+
+.wmp-button-body:hover {
+  box-shadow: 
+    inset 1px -1px 1px #091f9b,
+    inset 1px -1px 2px #89c6ef,
+    inset 2px -2px 2px #d9e0f0,
+    inset 0 -1px 1px #081e81,
+    inset 0 -1px 4px #152574,
+    0 2px 1px #030969,
+    0 -1px 2px #4f92d5;
+}
+
+/* Play/Pause button - large circle */
+.wmp-button-play {
+  width: 43px;
+  height: 43px;
+  border-radius: 100%;
+  bottom: 9px;
+  left: 0;
+}
+
+.wmp-button-play .wmp-button-body {
+  width: calc(100% - 6px);
+  height: calc(100% - 6px);
+  margin: 3px;
+  background: url("/assets/images/media-player/sprite_play.png") no-repeat,
+    radial-gradient(circle at 50% 15%, #fff 0, #fff 7%, #7789a8 100%);
+}
+
+.wmp-button-play .wmp-button-body:hover {
+  background: url("/assets/images/media-player/sprite_play.png") no-repeat,
+    radial-gradient(circle at 50% 15%, #fff 0, #fff 30%, #658ad5 100%);
+  background-position-x: -36px;
+  box-shadow: 
+    inset 0 -1px 2px 1px #000795,
+    inset 3px -4px 1px #90e5ff,
+    inset 0 -4px 2px #4a72bb,
+    0 -1px 1px rgba(39, 100, 121, 0.6),
+    inset 0 2px 2px #feffff,
+    0 -1px 1px 1px rgba(30, 191, 255, 0.66);
+}
+
+.wmp-button-play .wmp-button-body:active {
+  background: url("/assets/images/media-player/sprite_play.png") no-repeat,
+    radial-gradient(circle at 50% 20%, #f6fdfd 0, #f6fdfd 13%, #495b92 100%);
+  background-position-x: -72px;
+  box-shadow: 
+    inset 0 0 1px 1px rgba(0, 15, 66, 0.84),
+    inset 0 -2px 2px #002877,
+    inset 4px -3px 1px #94b4d7,
+    inset 0 -5px 1px #4e659f,
+    inset 0 0 2px 2px #9da9bf;
+}
+
+/* Pause state */
+.wmp-button-pause .wmp-button-body {
+  background: url("/assets/images/media-player/sprite_pause.png") no-repeat,
+    radial-gradient(circle at 50% 15%, #fff 0, #fff 7%, #7789a8 100%);
+}
+
+.wmp-button-pause .wmp-button-body:hover {
+  background: url("/assets/images/media-player/sprite_pause.png") no-repeat,
+    radial-gradient(circle at 50% 15%, #fff 0, #fff 30%, #658ad5 100%);
+  background-position-x: -37px;
+}
+
+.wmp-button-pause .wmp-button-body:active {
+  background: url("/assets/images/media-player/sprite_pause.png") no-repeat,
+    radial-gradient(circle at 50% 20%, #f6fdfd 0, #f6fdfd 13%, #495b92 100%);
+  background-position-x: -73px;
+}
+
+/* Stop button - rotated oval */
+.wmp-button-stop {
+  width: 24px;
+  height: 33px;
+  transform: rotate(-26deg);
+  border-radius: 100%;
+  bottom: 9px;
+  left: 41px;
+}
+
+.wmp-button-stop .wmp-button-body {
+  width: calc(100% - 5px);
+  height: calc(100% - 5px);
+  margin: 3px;
+  background: radial-gradient(circle at 75% 15%, #fff 0, #fff 20%, #9dacc7 100%);
+  box-shadow: 
+    inset 0 -1px 2px 1px #030a46,
+    inset 0 -2px 1px #235aff,
+    inset 3px -3px 2px #dfe3ec,
+    inset 0 -1px 1px #081e81,
+    inset 0 -5px 3px #7083ad,
+    0 0 1px 0 #222a7a;
+}
+
+.wmp-button-stop .wmp-button-body::before {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 25px;
+  transform: rotate(26deg) translateX(-1px);
+  background: url("/assets/images/media-player/sprite_stop.png") no-repeat;
+  background-position-x: 0;
+}
+
+.wmp-button-stop .wmp-button-body:hover {
+  background: radial-gradient(circle at 50% 15%, #fff 0, #fff 30%, #658ad5 100%);
+  box-shadow: 
+    inset 0 -1px 2px 1px #000795,
+    inset 3px -4px 1px #90e5ff,
+    inset 0 -4px 2px #4a72bb,
+    0 -1px 1px rgba(39, 100, 121, 0.6),
+    inset 0 2px 2px #feffff,
+    0 -1px 1px 1px rgba(30, 191, 255, 0.66);
+}
+
+.wmp-button-stop .wmp-button-body:hover::before {
+  background-position-x: -16px;
+}
+
+.wmp-button-stop .wmp-button-body:active {
+  background: radial-gradient(circle at 50% 20%, #f6fdfd 0, #f6fdfd 13%, #495b92 100%);
+  box-shadow: 
+    inset 0 0 1px 1px rgba(0, 15, 66, 0.84),
+    inset 0 -2px 2px #002877,
+    inset 4px -3px 1px #94b4d7,
+    inset 0 -5px 1px #4e659f,
+    inset 0 0 2px 2px #9da9bf;
+}
+
+.wmp-button-stop .wmp-button-body:active::before {
+  background-position-x: -32px;
+}
+
+/* Prev/Next buttons - pill shaped */
+.wmp-button-prev,
+.wmp-button-next {
+  width: 26px;
+  height: 19px;
+  border-radius: 7px;
+  bottom: 10px;
+}
+
+.wmp-button-prev {
+  left: 66px;
+}
+
+.wmp-button-next {
+  left: 95px;
+}
+
+.wmp-button-prev .wmp-button-body,
+.wmp-button-next .wmp-button-body {
+  border-radius: 7px;
+  margin: 3px 1px 2px;
+  width: 24px;
+  height: 14px;
+  background: url("/assets/images/media-player/sprite_changetrack.png") no-repeat,
+    linear-gradient(to bottom, #f3f9ff 0, #f9fdff 30%, #7a8fb5 100%);
+  box-shadow: 
+    inset 0 -1px 1px #000839,
+    inset 0 -2px 1px #003077,
+    0 -1px 3px #4763a0;
+}
+
+.wmp-button-next .wmp-button-body {
+  transform: scaleX(-1);
+}
+
+.wmp-button-prev .wmp-button-body:hover,
+.wmp-button-next .wmp-button-body:hover {
+  background-position-x: -24px;
+}
+
+.wmp-button-prev .wmp-button-body:active,
+.wmp-button-next .wmp-button-body:active {
+  background-position-x: -48px;
+}
+
+/* Mute button */
+.wmp-button-mute {
+  width: 26px;
+  height: 19px;
+  border-radius: 7px;
+  bottom: 10px;
+  left: 129px;
+}
+
+.wmp-button-mute .wmp-button-body {
+  border-radius: 7px;
+  margin: 3px 1px 2px;
+  width: 24px;
+  height: 14px;
+  background: url("/assets/images/media-player/sprite_mute.png") no-repeat,
+    linear-gradient(to bottom, #f3f9ff 0, #f9fdff 30%, #7a8fb5 100%);
+  box-shadow: 
+    inset 0 -1px 1px #000839,
+    inset 0 -2px 1px #003077,
+    0 -1px 3px #4763a0;
+}
+
+.wmp-button-mute .wmp-button-body:hover {
+  background-position-x: -24px;
+}
+
+.wmp-button-mute.active .wmp-button-body {
+  background-position-x: -48px;
+}
+
+/* Volume bar */
+.wmp-volbar {
+  position: absolute;
+  left: 157px;
+  bottom: 13px;
+  width: 42px;
+  height: 10px;
+  padding-right: 12px;
+}
+
+.wmp-volbar-bg {
+  width: 54px;
+  height: 10px;
+  clip-path: path("M54,0,3.4,2.81A3.6,3.6,0,0,0,0,6.4H0A3.6,3.6,0,0,0,3.6,10H43Z");
+  background: linear-gradient(179deg, #202c7b, #364690, #4a5c9e, #566aaa, #6377b5, #6b81be, #768bc8, #7f95d4, #8aa0e2);
+}
+
+.wmp-volbar-fill {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  width: 45px;
+  height: 7px;
+  clip-path: path("M45,0,2.44,1.89A2.56,2.56,0,0,0,0,4.44H0A2.55,2.55,0,0,0,2.56,7H37Z");
+  background: linear-gradient(to bottom, #a0eaa1, #84e586, #67df69, #4ad94c, #31d334, #3cd63f, #5eae8e);
+}
+
+.wmp-volbar-pointer {
+  position: absolute;
+  top: -1px;
+  right: 0;
+  width: 8px;
+  height: 10px;
+  background: radial-gradient(circle at 33% 25%, #fff 0, #fff 20%, #b4bccf);
+  border-radius: 3px 3px 0 0;
+  box-shadow: 
+    inset 0 1px 1px #a5b4d1,
+    inset -1px 0 rgba(140, 152, 180, 0.67),
+    inset 1px 0 #b0bbd0;
+  filter: drop-shadow(0 1px 1px #2b3648);
+}
+
+.wmp-volbar-pointer::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 4px 0 4px;
+  border-color: #b2bace transparent transparent transparent;
+  position: absolute;
+  top: 10px;
+}
+
+
+/* 
+
+    --srcWidth: 640px;
+    --srcTop: 200px;
+    --srcLeft: 200px;
+    --destWidth: 100%;
+    --destTop: 0px;
+    --destLeft: 0px;
+    --titleFont: "Trebuchet MS",sans-serif;
+    --titleFontSize: 14px;
+    --accentGradient: linear-gradient(to right, var(--activePrimary), var(--activeSecondary));
+    --lowerBoxDark: var(--3dDarkShade) var(--mainColor) var(--mainColor) var(--3dDarkShade);
+    --lowerBoxLight: var(--3dLightShade) var(--3dHighlight) var(--3dHighlight) var(--3dLightShade);
+    --raiseBoxDark: var(--mainColor) var(--3dDarkShade) var(--3dDarkShade) var(--mainColor);
+    --raiseBoxLight: var(--3dHighlight) var(--3dLightShade) var(--3dLightShade) var(--3dHighlight);
+    --insetBSLowerDark: inset 1px 1px var(--3dDarkShade),inset -1px -1px var(--mainColor);
+    --insetBSLowerLight: inset 1px 1px var(--3dLightShade),inset -1px -1px var(--3dHighlight);
+    --insetBSRaiseDark: inset 1px 1px var(--mainColor),inset -1px -1px var(--3dDarkShade);
+    --insetBSRaiseLight: inset 1px 1px var(--3dHighlight),inset -1px -1px var(--3dLightShade);
+    --BSLowerDark: -1px -1px var(--3dDarkShade),1px 1px var(--mainColor);
+    --BSLowerLight: -1px -1px var(--3dLightShade),1px 1px var(--3dHighlight);
+    --BSRaiseDark: -1px -1px var(--mainColor),1px 1px var(--3dDarkShade);
+    --BSRaiseLight: -1px -1px var(--3dHighlight),1px 1px var(--3dLightShade);
+    --menuShadow: 2px 2px 2px #00000088;
+    --mainColor: #ece9d8;
+    --mainText: #000;
+    --internalBackdrop: #808080;
+    --desktop: #004e98;
+    --iconFilter: brightness(.3) sepia(90%) hue-rotate(160deg) saturate(7);
+    --3dHighlight: #fff;
+    --3dLightShade: #aca899;
+    --3dDarkShade: #716f64;
+    --activePrimary: #0054e3;
+    --activeSecondary: #3d95ff;
+    --activeFrame: transparent;
+    --activeTitleText: #fff;
+    --inactivePrimary: #7a96df;
+    --inactiveSecondary: #9db9eb;
+    --inactiveFrame: transparent;
+    --inactiveTitleText: #d8e4f8;
+    --bodyText: #000;
+    --inactiveBodyText: #808080;
+    --highlightColor: #316ac5;
+    --highlightText: #fff;
+    --menuColor: #fff;
+    --menuText: #000;
+    --contentColor: #fff;
+    --contentText: #000;
+    --contentFont: "msPixelTahoma","Tahoma",sans-serif;
+    --contentFontSize: 13px;
+    --systemFont: "msSansSerif","Microsoft Sans Serif",sans-serif;
+    --systemFontSize: 13px;
+    --icon-mask: url('https://xp.quenq.com/res/icons/mymusic.png');
+    cursor: unset;
+    pointer-events: all;
+    scrollbar-color: unset !important;
+    letter-spacing: 0px;
+    user-select: none;
+    --parent-color: var(--color);
+    font-family: var(--contentFont);
+    font-size: var(--contentFontSize);
+    margin: 0px;
+    padding: 0px 0px 0px 2px;
+    display: inline-block;
+    list-style-type: none;
+    color: rgb(0, 0, 0);
+    border-bottom: 1px solid rgb(216, 210, 189);
+    padding-top: 4px;
+    padding-bottom: 1px;
+    width: calc(100% - 6px);
+    height: 15px;
+    margin-top: 2px;
+    line-height: 11px;
+
+
+
+
+
+appcontentholder appnavigation ul.appmenus {
+    padding-top: 4px;
+    padding-bottom: 1px;
+    width: calc(100% - 6px);
+    height: 15px;
+    margin-top: 2px;
+    line-height: 11px;
+}
+
+appcontentholder appnavigation ul.appmenus .submenu {
+    display: none;
+    position: absolute;
+    border: 1px solid var(--3dLightShade);
+    flex-direction: column;
+    z-index: 999;
+    width: auto;
+    top: 20px;
+    padding: 2px;
+    box-shadow: var(--menuShadow);
+    background: var(--menuColor) !important;
+}
+
+appcontentholder appnavigation ul.appmenus .submenu.visible {
+    display: flex;
+}
+
+appcontentholder appnavigation ul.appmenus .submenu li {
+    padding: 3px 17px;
+}
+
+appcontentholder appnavigation ul.appmenus .submenu li.disabled {
+    color: var(--3dLightShade);
+}
+
+appcontentholder appnavigation ul.appmenus .submenu li.divider {
+    width: calc(100% - 2px);
+    height: 1px;
+    background: var(--3dLightShade);
+    padding: 0px;
+    margin: 3px 1px 4px;
+}
+
+appcontentholder appnavigation ul.appmenus li {
+    padding: 4px 7px 2px;
+}
+
+appcontentholder appnavigation ul.appmenus li:hover {
+    background-color: var(--highlightColor);
+} */

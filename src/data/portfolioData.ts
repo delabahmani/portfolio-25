@@ -405,4 +405,12 @@ Let's build something amazing together!`,
     y: 440,
     url: "/assets/documents/resume.pdf",
   },
+  {
+    id: "media-player",
+    name: "media player",
+    icon: "/assets/icons/media-player.webp",
+    type: "media-player",
+    x: 200,
+    y: 50,
+  },
 ];

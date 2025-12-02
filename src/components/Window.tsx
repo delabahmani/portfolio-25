@@ -8,6 +8,7 @@ import ResizeHandles from "./ResizeHandles";
 import { EmailWindow } from "./EmailWindow";
 import { DisplayProperties } from "./DisplayProperties";
 import { useTheme } from "../hooks/UseTheme";
+import MediaPlayer from "./MediaPlayer";
 
 interface WindowProps {
   data: WindowData;
@@ -190,6 +191,10 @@ const Window: React.FC<WindowProps> = ({
       return <EmailWindow onClose={onClose} />;
     }
 
+    if (data.type === "media-player") {
+      return <MediaPlayer />;
+    }
+
     // Render text file content
     if (data.content.type === "file") {
       // Check if it's an image file
@@ -255,18 +260,22 @@ const Window: React.FC<WindowProps> = ({
           top: 0,
           width: "100vw",
           height: "calc(100vh - 40px)",
+          minHeight: data.type === "media-player" ? "440px" : undefined,
         }
       : {
           left: position.x,
           top: position.y,
           width: data.width,
           height: data.height,
+          minHeight: data.type === "media-player" ? "440px" : undefined,
         }),
     zIndex: data.zIndex,
     transform: isOpening || isClosing ? "scale(0.8)" : "scale(1)",
     opacity: isOpening || isClosing ? 0 : 1,
     transition: isDragging ? "none" : "all 0.15s ease-out",
   };
+
+  // ...existing code...
 
   return (
     <div
@@ -283,9 +292,10 @@ const Window: React.FC<WindowProps> = ({
         backfaceVisibility: "hidden",
       }}
     >
-      {!isMobile && <ResizeHandles data={data} onResize={onResize} />}
+      {!isMobile && data.type !== "media-player" && (
+        <ResizeHandles data={data} onResize={onResize} />
+      )}
 
-      {/* Title Bar */}
       <TitleBar
         title={data.title}
         icon={data.content?.icon}
@@ -298,41 +308,46 @@ const Window: React.FC<WindowProps> = ({
         bind={bind}
       />
 
-      {/* Menu Bar */}
       <div className="flex flex-col">
-        <div className="flex items-center gap-1 px-2 py-1 border-b border-gray-400 bg-gradient-to-b from-white to-xp-gray">
-          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+        <div className="flex items-center gap-1 border-b border-gray-400 bg-gradient-to-b from-white to-xp-gray text-lg">
+          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
             File
           </button>
-          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
-            Edit
-          </button>
-          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
             View
           </button>
-          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
+            Play
+          </button>
+          {data.type !== "media-player" && (
+            <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
+              Edit
+            </button>
+          )}
+          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
             Tools
           </button>
-          <button className="px-3 py-1 text-sm hover:bg-blue-100 border border-transparent hover:border-blue-300">
+          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
             Help
           </button>
         </div>
       </div>
 
-      {/* Address Bar (for folders) */}
-      {(data.content?.type === "folder" ||
-        data.type === "display-properties") && (
-        <div className="bg-white border-b border-gray-300 px-2 py-1 flex items-center">
-          <span className="text-xs mr-2">Address:</span>
-          <div className="bg-white border border-gray-400 px-2 py-1 text-xs flex-1">
-            {data.type === "display-properties"
-              ? "Control Panel\\Display Properties"
-              : data.content?.name === "projects" && data.content?.content
-              ? `C:\\Desktop\\${data.content.name}`
-              : `C:\\Desktop\\${data.title}`}
+      {/* Only show address bar for folders/display-properties */}
+      {data.type !== "media-player" &&
+        (data.content?.type === "folder" ||
+          data.type === "display-properties") && (
+          <div className="bg-white border-b border-gray-300 px-2 py-1 flex items-center">
+            <span className="text-xs mr-2">Address:</span>
+            <div className="bg-white border border-gray-400 px-2 py-1 text-xs flex-1">
+              {data.type === "display-properties"
+                ? "Control Panel\\Display Properties"
+                : data.content?.name === "projects" && data.content?.content
+                ? `C:\\Desktop\\${data.content.name}`
+                : `C:\\Desktop\\${data.title}`}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       {/* Content Area */}
       <div className="flex-1 overflow-hidden">{renderContent()}</div>

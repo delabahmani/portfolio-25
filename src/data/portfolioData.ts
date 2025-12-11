@@ -403,7 +403,7 @@ Let's build something amazing together!`,
     type: "app",
     x: 200,
     y: 180,
-    url: "/assets/documents/resume.pdf",
+    url: "/assets/documents/Delara_Bahmani_Resume_2025.pdf",
   },
   {
     id: "media-player",

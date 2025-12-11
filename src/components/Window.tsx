@@ -9,6 +9,7 @@ import { EmailWindow } from "./EmailWindow";
 import { DisplayProperties } from "./DisplayProperties";
 import { useTheme } from "../hooks/UseTheme";
 import MediaPlayer from "./MediaPlayer";
+import AppNavigation from "./AppNavigation";
 
 interface WindowProps {
   data: WindowData;
@@ -275,8 +276,6 @@ const Window: React.FC<WindowProps> = ({
     transition: isDragging ? "none" : "all 0.15s ease-out",
   };
 
-  // ...existing code...
-
   return (
     <div
       ref={windowRef}
@@ -288,6 +287,10 @@ const Window: React.FC<WindowProps> = ({
       style={{
         ...windowStyle,
         border: `3px solid ${colors.windowBorder}`,
+        borderLeft: ` 4px solid ${colors.windowBorder}`,
+        borderTop: ` 2px solid ${colors.windowBorder}`,
+        borderRight: ` 4px solid ${colors.windowBorder}`,
+        borderBottom: ` 4px solid ${colors.windowBorder}`,
         transform: `${windowStyle.transform} translateZ(0)`,
         backfaceVisibility: "hidden",
       }}
@@ -308,46 +311,11 @@ const Window: React.FC<WindowProps> = ({
         bind={bind}
       />
 
-      <div className="flex flex-col">
-        <div className="flex items-center gap-1 border-b border-gray-400 bg-gradient-to-b from-white to-xp-gray text-lg">
-          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
-            File
-          </button>
-          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
-            View
-          </button>
-          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
-            Play
-          </button>
-          {data.type !== "media-player" && (
-            <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
-              Edit
-            </button>
-          )}
-          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
-            Tools
-          </button>
-          <button className="px-2 hover:bg-blue-100 border border-transparent hover:border-blue-300">
-            Help
-          </button>
-        </div>
-      </div>
-
       {/* Only show address bar for folders/display-properties */}
       {data.type !== "media-player" &&
         (data.content?.type === "folder" ||
-          data.type === "display-properties") && (
-          <div className="bg-white border-b border-gray-300 px-2 py-1 flex items-center">
-            <span className="text-xs mr-2">Address:</span>
-            <div className="bg-white border border-gray-400 px-2 py-1 text-xs flex-1">
-              {data.type === "display-properties"
-                ? "Control Panel\\Display Properties"
-                : data.content?.name === "projects" && data.content?.content
-                ? `C:\\Desktop\\${data.content.name}`
-                : `C:\\Desktop\\${data.title}`}
-            </div>
-          </div>
-        )}
+          data.type === "display-properties" ||
+          data.type === "email") && <AppNavigation data={data} />}
 
       {/* Content Area */}
       <div className="flex-1 overflow-hidden">{renderContent()}</div>

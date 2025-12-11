@@ -45,29 +45,29 @@ export const EmailWindow: React.FC<EmailWindowProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-xp-window">
+    <div className="h-full flex flex-col app-nav-gradient">
       <form
         onSubmit={handleSubmit}
         className="flex-1 flex flex-col overflow-hidden"
       >
         {/* Icon Toolbar */}
-        <div className="flex items-center gap-2 px-2 py-2 border-b border-gray-400 bg-gradient-to-b from-white to-[#ece9d8]">
+        <div className="flex items-center gap-2 px-2 border-b border-gray-400 ">
           <button
             type="submit"
             disabled={status === "sending"}
-            className="p-1 hover:bg-blue-100 border border-transparent hover:border-blue-300 flex items-center gap-2"
+            className="p-1 rounded border border-transparent border-b-2 border-b-transparent hover:border-b-[#cdc8b5] hover:border-[#d8d2bd] hover:backdrop-brightness-[102%] flex items-center gap-1.5"
           >
             <img
               src="/assets/icons/mail-3.webp"
               alt="Send"
-              className="w-6 h-6"
+              className="w-4 h-4"
             />
             {status === "sending" ? "Sending..." : "Send"}
           </button>
           <div className="w-px h-6 bg-gray-400" />
           <button
             type="button"
-            className="p-1 hover:bg-blue-100 border border-transparent hover:border-blue-300 flex items-center"
+            className="p-1 rounded border border-transparent border-b-2 border-b-transparent hover:border-b-[#cdc8b5] hover:border-[#d8d2bd] hover:backdrop-brightness-[102%] flex items-center"
           >
             <img
               src="/assets/icons/attach.webp"
@@ -79,9 +79,11 @@ export const EmailWindow: React.FC<EmailWindowProps> = ({ onClose }) => {
         </div>
 
         {/* Email Form */}
-        <div className="flex gap-2 flex-col justify-start px-6.5 py-3">
+        <div className="flex gap-2 flex-col justify-start px-2 py-3">
           <div className="flex items-center gap-2">
-            <label className="w-16 font-bold">From:</label>
+            <label className="w-14 border-b-[1px] border-b-[#d8d2bd] border-r-[1px] border-r-[#d8d2bd] border-l-[1px] border-l-[#FAFAFA] border-t-[1px] border-t-[#FAFAFA] brightness-105 px-2 ">
+              From...
+            </label>
             <input
               type="email"
               value={formData.email}
@@ -94,7 +96,9 @@ export const EmailWindow: React.FC<EmailWindowProps> = ({ onClose }) => {
             />
           </div>
           <div className="flex items-center gap-2">
-            <label className="w-16 font-bold">Name:</label>
+            <label className="w-14 border-b-[1px] border-b-[#d8d2bd] border-r-[1px] border-r-[#d8d2bd] border-l-[1px] border-l-[#FAFAFA] border-t-[1px] border-t-[#FAFAFA] brightness-105 px-2">
+              Name:
+            </label>
             <input
               type="text"
               value={formData.name}
@@ -107,7 +111,9 @@ export const EmailWindow: React.FC<EmailWindowProps> = ({ onClose }) => {
             />
           </div>
           <div className="flex items-center gap-2">
-            <label className="w-16 font-bold">Subject:</label>
+            <label className="w-14 border-b-[1px] border-b-[#d8d2bd] border-r-[1px] border-r-[#d8d2bd] border-l-[1px] border-l-[#FAFAFA] border-t-[1px] border-t-[#FAFAFA] brightness-105 px-2">
+              Subject:
+            </label>
             <input
               type="text"
               value={formData.subject}

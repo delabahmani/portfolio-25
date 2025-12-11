@@ -37,7 +37,7 @@ const TitleBar: React.FC<TitleBarProps> = ({
         background: colors.titleBarGradient,
         height: "28px",
         fontFamily: "Trebuchet MS, sans-serif",
-        fontSize: "11px",
+        fontSize: "12px",
         borderTop: "1px solid #3D95FF",
         touchAction: "none",
         paddingLeft: "4px",
@@ -61,7 +61,7 @@ const TitleBar: React.FC<TitleBarProps> = ({
           />
         )}
         <span
-          className="font-medium"
+          className="font-bold"
           style={{
             textShadow: "1px 1px 0 rgba(0, 0, 0, 0.5)",
             lineHeight: "1",
@@ -77,123 +77,79 @@ const TitleBar: React.FC<TitleBarProps> = ({
       >
         {/* Minimize Button */}
         <button
-          className="flex justify-center items-center font-bold cursor-pointer"
+          className="cursor-pointer border-none bg-transparent p-0 hover:brightness-110"
           style={{
-            width: "20px",
-            height: "20px",
-            marginLeft: "2px",
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
-            border: "1px solid rgba(255, 255, 255, 0.3)",
-            borderRadius: "2px",
-            boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
-            fontSize: "11px",
-            lineHeight: "1",
-            padding: "0",
+            width: "21px",
+            height: "21px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
           onClick={onMinimize}
         >
-          _
+          <img
+            src="/assets/icons/minimize.webp"
+            alt="Minimize"
+            style={{
+              width: "21px",
+              height: "21px",
+              display: "block",
+            }}
+            draggable={false}
+          />
         </button>
 
         {/* Maximize Button */}
         {!isMobile && (
           <button
-            className="flex justify-center items-center font-bold cursor-pointer"
+            className="cursor-pointer border-none bg-transparent p-0 hover:brightness-110"
             style={{
-              width: "20px",
-              height: "20px",
-              marginLeft: "2px",
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              border: "1px solid rgba(255, 255, 255, 0.3)",
-              borderRadius: "2px",
-              boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
-              fontSize: "9px",
-              lineHeight: "1",
-              padding: "0",
+              width: "21px",
+              height: "21px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
             onClick={(e) => {
               e.stopPropagation();
               onMaximize();
             }}
           >
-            {isMaximized ? (
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 10 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="1"
-                  y="1"
-                  width="4"
-                  height="4"
-                  stroke="white"
-                  strokeWidth="1"
-                />
-                <rect
-                  x="5"
-                  y="5"
-                  width="4"
-                  height="4"
-                  stroke="white"
-                  strokeWidth="1"
-                />
-              </svg>
-            ) : (
-              <svg
-                width="10"
-                height="10"
-                viewBox="0 0 10 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="1"
-                  y="1"
-                  width="8"
-                  height="8"
-                  stroke="white"
-                  strokeWidth="1"
-                />
-              </svg>
-            )}
+            <img
+              src="/assets/icons/maximize.webp"
+              alt="Maximize"
+              style={{
+                width: "21px",
+                height: "21px",
+                display: "block",
+              }}
+              draggable={false}
+            />
           </button>
         )}
 
         {/* Close Button */}
         <button
-          className="flex justify-center items-center font-bold cursor-pointer"
+          className="cursor-pointer border-none bg-transparent p-0 hover:brightness-110"
           style={{
-            width: "20px",
-            height: "20px",
-            marginLeft: "2px",
-            background: "linear-gradient(to bottom, #FF8F8F, #CC0000)",
-            border: "1px solid #CC0000",
-            borderRadius: "2px",
-            boxShadow: "0 1px 0 rgba(0, 0, 0, 0.2)",
-            fontSize: "20px",
-            color: "white",
-            lineHeight: "1",
-            padding: "0",
+            width: "21px",
+            height: "21px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
           onClick={onClose}
         >
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1L9 9M9 1L1 9"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-            />
-          </svg>
+          <img
+            src="/assets/icons/exit.webp"
+            alt="Close"
+            style={{
+              width: "21px",
+              height: "21px",
+              display: "block",
+            }}
+            draggable={false}
+          />
         </button>
       </div>
     </div>

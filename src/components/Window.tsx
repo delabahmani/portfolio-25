@@ -260,7 +260,7 @@ const Window: React.FC<WindowProps> = ({
           left: 0,
           top: 0,
           width: "100vw",
-          height: "calc(100vh - 40px)",
+          height: "calc(100dvh - 40px)",
           minHeight: data.type === "media-player" ? "440px" : undefined,
         }
       : {
